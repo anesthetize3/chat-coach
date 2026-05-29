@@ -35,29 +35,38 @@ draft = st.text_area(
     key="draft",
 )
 
-SYSTEM = """You are an expert English writing coach. Compare the user's draft phrase-by-phrase
-with an improved version, and return STRICT JSON with these keys:
+SYSTEM = """You are an expert writing coach for the target language stated below.
+Compare the user's draft phrase-by-phrase with an improved version, and return
+STRICT JSON with these keys:
 
 - "pairs": array aligning the ORIGINAL phrases/sentences to their REVISED versions.
   Each item: {"original": "...", "revised": "...", "comment": "...", "category": "..."}.
   - Split into natural phrases or sentences (NOT individual words).
   - If a phrase is already perfect, "revised" should equal "original" and "comment"
-    should briefly say why it works (e.g. "Clear and natural — keep as is.").
+    should briefly say why it works.
   - "comment" must be 1-2 full sentences explaining the change (or non-change),
     referencing grammar, clarity, tone, word choice, or naturalness.
   - "category" is one of: "grammar", "clarity", "tone", "vocabulary", "style", "kept".
 
 - "recommendations": array of 2-5 broader writing tips for the user (each <= 25 words).
-  Focus on PATTERNS you noticed (e.g. overused words, weak verbs, run-on sentences,
-  hedging). Phrase each as actionable advice.
+  Focus on PATTERNS you noticed. Phrase each as actionable advice.
 
 - "summary": single line summarising the overall change (<= 20 words).
+
+LANGUAGE RULES:
+- The draft is in the TARGET LANGUAGE. Keep "original" and "revised" in that language.
+- Write all "comment", "recommendations", and "summary" text in the TARGET LANGUAGE
+  so the learner reads feedback in the language they are practising.
+- For Vietnamese: respect tone particles, classifiers, diacritics, formal vs. casual register.
+- For English: respect the requested tone and audience.
 
 Preserve original meaning. Match the requested tone and depth. No prose outside JSON."""
 
 
-def run_polish(text: str, tone: str, level: str, audience: str) -> dict:
+def run_polish(text: str, tone: str, level: str,
+               audience: str, language: str) -> dict:
     user = (
+        f"TARGET LANGUAGE: {language}\n"
         f"Audience: {audience}\nTone preference: {tone}\nDepth: {level}\n\n"
         f"Draft:\n\"\"\"\n{text}\n\"\"\""
     )
@@ -84,6 +93,7 @@ if go:
             result = run_polish(
                 draft.strip(), tone, level,
                 st.session_state.get("audience", "Global / Neutral"),
+                st.session_state.get("language", "English"),
             )
         st.session_state["polish_result"] = result
         st.session_state["polish_input"] = draft.strip()

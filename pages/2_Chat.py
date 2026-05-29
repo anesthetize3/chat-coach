@@ -20,6 +20,15 @@ SCENARIOS = {
     "Negotiation": "You are a vendor negotiating a contract renewal. Push back firmly but fairly.",
 }
 
+LEVELS_BY_LANG = {
+    "English": ["A2 Elementary", "B1 Intermediate",
+                "B2 Upper-Intermediate", "C1 Advanced"],
+    "Vietnamese": ["Beginner (sơ cấp)", "Intermediate (trung cấp)",
+                   "Upper-Intermediate (trung cao)", "Advanced (cao cấp)"],
+}
+
+language = st.session_state.get("language", "English")
+
 with st.container():
     c1, c2, c3 = st.columns([2, 2, 1])
     with c1:
@@ -27,21 +36,22 @@ with st.container():
                                 key="scenario_pick")
     with c2:
         level = st.selectbox("Your level",
-                             ["A2 Elementary", "B1 Intermediate",
-                              "B2 Upper-Intermediate", "C1 Advanced"],
+                             LEVELS_BY_LANG[language],
                              index=2)
     with c3:
         st.write("")
         st.write("")
         if st.button("Reset", use_container_width=True):
-            for k in ("messages", "active_scenario"):
+            for k in ("messages", "active_scenario", "active_language"):
                 st.session_state.pop(k, None)
             st.rerun()
 
-# Reset history when scenario changes
-if st.session_state.get("active_scenario") != scenario:
+# Reset history when scenario OR language changes
+if (st.session_state.get("active_scenario") != scenario
+        or st.session_state.get("active_language") != language):
     st.session_state["messages"] = []
     st.session_state["active_scenario"] = scenario
+    st.session_state["active_language"] = language
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
@@ -50,23 +60,28 @@ PARTNER_SYSTEM = (
     "You are role-playing in the following scenario. Stay fully in character. "
     "Keep replies to 1–3 sentences. Don't break character to coach — coaching is handled separately.\n\n"
     f"Scenario: {SCENARIOS[scenario]}\n"
-    f"User's English level: {level}. Match a natural register; don't over-simplify."
+    f"TARGET LANGUAGE: {language}. Reply ONLY in {language}. "
+    "Use natural register, idioms, and tone particles appropriate to that language.\n"
+    f"User's {language} level: {level}. Match a natural register; don't over-simplify."
 )
 
-COACH_SYSTEM = """You are an English coach analysing the user's latest message in a conversation.
-You will also see the user's PREVIOUS messages in this session so you can spot repeated or overused words.
+COACH_SYSTEM = f"""You are a {language} language coach analysing the user's latest message
+in a conversation. The conversation is conducted in {language}.
+You will also see the user's PREVIOUS messages in this session so you can spot repeated
+or overused words.
 
 Return STRICT JSON with these keys:
 - "rating": integer 1-5 (overall quality of this message: grammar, clarity, naturalness)
-- "fix":   a single corrected, more natural version of the message. Empty string if no change is needed.
-- "explanation": 2-4 sentences explaining WHY you suggested the fix.
-                 Reference specific words/phrases. Cover grammar, word choice, register, or naturalness.
-                 If the message is already good, explain what makes it work well.
-- "synonyms": array of up to 4 objects {"word": "<word user used>", "alternatives": ["alt1","alt2","alt3"]}.
-              Prioritise words the user has REPEATED across messages, then generic/overused words
-              ("good", "nice", "very", "thing", "stuff", "do", "make", "get").
-              Empty array if nothing worth replacing.
-- "tip":   one short, actionable coaching tip (<= 22 words) — phrased as advice, not just an observation.
+- "fix":   a single corrected, more natural version of the message, IN {language}.
+           Empty string if no change is needed.
+- "explanation": 2-4 sentences, IN {language}, explaining WHY you suggested the fix.
+                 Reference specific words/phrases. Cover grammar, word choice, register,
+                 or naturalness. If the message is already good, explain what makes it work.
+- "synonyms": array of up to 4 objects {{"word": "<word user used>", "alternatives": ["alt1","alt2","alt3"]}}.
+              Words and alternatives must be in {language}.
+              Prioritise words the user has REPEATED across messages, then generic/overused
+              words in {language}. Empty array if nothing worth replacing.
+- "tip":   one short, actionable coaching tip (<= 22 words), IN {language}.
 
 No prose outside the JSON. Be concrete and kind."""
 

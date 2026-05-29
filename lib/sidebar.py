@@ -35,6 +35,13 @@ def render() -> None:
             help="Larger model is more accurate; smaller is faster.",
         )
 
+        st.session_state["language"] = st.selectbox(
+            "Language to practice",
+            ["English", "Vietnamese"],
+            index=0,
+            help="Coaching and corrections will be in this language.",
+        )
+
         st.session_state["audience"] = st.selectbox(
             "Audience",
             ["Global / Neutral", "US business", "UK business",
