@@ -1,15 +1,16 @@
-"""Polish — paste a draft, get fixes, rewrite, and notes."""
+"""Polish — paste a draft, get side-by-side phrase comparison + recommendations."""
 from __future__ import annotations
+
+import html
 
 import streamlit as st
 
 from lib import llm, sidebar, ui
-from lib.diff import inline_diff
 
 ui.apply("Polish · Chat Coach")
 sidebar.render()
 ui.hero("✍️ Polish",
-        "Inline diff, clean rewrite, and short coaching notes.",
+        "Side-by-side phrase comparison with comments and recommendations.",
         badge="Polish")
 
 TONES = ["Keep tone", "More professional", "Friendlier", "More concise",
@@ -34,12 +35,25 @@ draft = st.text_area(
     key="draft",
 )
 
-SYSTEM = """You are an expert English writing coach. Return STRICT JSON with keys:
-- "revised": the rewritten text (string)
-- "notes": array of objects {category, comment} where category is one of
-  ["grammar","clarity","tone","vocabulary","style"], 2-5 items, each comment <= 22 words
-- "summary": one-line summary of changes (<= 18 words)
-No prose outside JSON. Preserve original meaning and language register requested by the user."""
+SYSTEM = """You are an expert English writing coach. Compare the user's draft phrase-by-phrase
+with an improved version, and return STRICT JSON with these keys:
+
+- "pairs": array aligning the ORIGINAL phrases/sentences to their REVISED versions.
+  Each item: {"original": "...", "revised": "...", "comment": "...", "category": "..."}.
+  - Split into natural phrases or sentences (NOT individual words).
+  - If a phrase is already perfect, "revised" should equal "original" and "comment"
+    should briefly say why it works (e.g. "Clear and natural — keep as is.").
+  - "comment" must be 1-2 full sentences explaining the change (or non-change),
+    referencing grammar, clarity, tone, word choice, or naturalness.
+  - "category" is one of: "grammar", "clarity", "tone", "vocabulary", "style", "kept".
+
+- "recommendations": array of 2-5 broader writing tips for the user (each <= 25 words).
+  Focus on PATTERNS you noticed (e.g. overused words, weak verbs, run-on sentences,
+  hedging). Phrase each as actionable advice.
+
+- "summary": single line summarising the overall change (<= 20 words).
+
+Preserve original meaning. Match the requested tone and depth. No prose outside JSON."""
 
 
 def run_polish(text: str, tone: str, level: str, audience: str) -> dict:
@@ -55,6 +69,11 @@ def run_polish(text: str, tone: str, level: str, audience: str) -> dict:
     )
     return llm.parse_json(raw)
 
+
+CAT_KINDS = {
+    "grammar": "err", "clarity": "warn", "tone": "",
+    "vocabulary": "ok", "style": "", "kept": "ok",
+}
 
 if go:
     if not draft.strip():
@@ -74,38 +93,83 @@ if go:
 
 result = st.session_state.get("polish_result")
 if result:
-    original = st.session_state.get("polish_input", "")
-    revised = result.get("revised", "").strip()
-    notes = result.get("notes", [])
+    pairs = result.get("pairs", []) or []
+    recs = result.get("recommendations", []) or []
     summary = result.get("summary", "")
+    revised_full = " ".join(p.get("revised", "") for p in pairs).strip()
 
     st.markdown("### Result")
     if summary:
         st.markdown(f"<div class='cc-note'>📝 {summary}</div>",
                     unsafe_allow_html=True)
 
-    tab1, tab2, tab3 = st.tabs(["🔀 Diff", "✨ Clean rewrite", "🎯 Notes"])
+    tab1, tab2, tab3 = st.tabs(
+        ["🔀 Side-by-side", "✨ Clean rewrite", "🎯 Recommendations"]
+    )
+
     with tab1:
-        st.markdown(
-            f"<div class='cc-diff'>{inline_diff(original, revised)}</div>",
-            unsafe_allow_html=True,
-        )
-        st.caption("Red strikethrough = removed · Green = added")
+        if not pairs:
+            st.caption("No phrase comparisons returned.")
+        # Header row
+        h1, h2, h3 = st.columns([4, 4, 5])
+        h1.markdown("**Original**")
+        h2.markdown("**Revised**")
+        h3.markdown("**Comment**")
+        st.markdown("<hr style='margin:6px 0;opacity:0.3'>",
+                    unsafe_allow_html=True)
+
+        for p in pairs:
+            orig = (p.get("original") or "").strip()
+            rev = (p.get("revised") or "").strip()
+            comment = (p.get("comment") or "").strip()
+            cat = (p.get("category") or "").lower()
+            kept = (cat == "kept") or (orig == rev)
+            kind = CAT_KINDS.get(cat, "")
+            pill = ui.status_pill(
+                "Kept" if kept else (cat.title() or "Change"),
+                "ok" if kept else kind,
+            )
+
+            col1, col2, col3 = st.columns([4, 4, 5])
+            with col1:
+                bg = "var(--cc-surface-2)" if kept else "rgba(255,107,107,0.08)"
+                col1.markdown(
+                    f"<div style='background:{bg};padding:10px 12px;"
+                    f"border-radius:10px;font-size:0.93rem;line-height:1.5'>"
+                    f"{html.escape(orig)}</div>",
+                    unsafe_allow_html=True,
+                )
+            with col2:
+                bg = ("var(--cc-surface-2)" if kept
+                      else "rgba(52,211,153,0.10)")
+                col2.markdown(
+                    f"<div style='background:{bg};padding:10px 12px;"
+                    f"border-radius:10px;font-size:0.93rem;line-height:1.5'>"
+                    f"{html.escape(rev)}</div>",
+                    unsafe_allow_html=True,
+                )
+            with col3:
+                col3.markdown(
+                    f"<div style='padding:6px 0'>{pill}<br>"
+                    f"<span style='font-size:0.9rem;color:var(--cc-muted)'>"
+                    f"{html.escape(comment)}</span></div>",
+                    unsafe_allow_html=True,
+                )
+            st.markdown("<div style='height:6px'></div>",
+                        unsafe_allow_html=True)
+
     with tab2:
-        st.text_area("Revised", value=revised, height=220,
+        st.text_area("Revised", value=revised_full, height=220,
                      label_visibility="collapsed")
-        st.download_button("Download .txt", revised, file_name="polished.txt")
+        st.download_button("Download .txt", revised_full,
+                           file_name="polished.txt")
+
     with tab3:
-        if not notes:
-            st.caption("No notes returned.")
-        cat_kinds = {"grammar": "err", "clarity": "warn",
-                     "tone": "", "vocabulary": "ok", "style": ""}
-        for n in notes:
-            cat = (n.get("category") or "").lower()
-            kind = cat_kinds.get(cat, "")
-            pill = ui.status_pill(cat.title() or "Note", kind)
+        if not recs:
+            st.caption("No general recommendations.")
+        for i, r in enumerate(recs, 1):
             st.markdown(
-                f"<div class='cc-note'>{pill} &nbsp; {n.get('comment','')}</div>",
+                f"<div class='cc-note'><b>{i}.</b> {html.escape(str(r))}</div>",
                 unsafe_allow_html=True,
             )
 else:
