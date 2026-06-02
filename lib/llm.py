@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from pathlib import Path
 from typing import Iterable
@@ -239,16 +240,37 @@ def _gemini_stream(messages, model, temperature):
 
 # ---------- Public API ----------
 
+_RETRY_AFTER_RE = re.compile(
+    r"try again in\s+(?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:([\d.]+)s)?",
+    re.IGNORECASE,
+)
+
+
 def _is_quota_error(e: Exception) -> bool:
     msg = str(e)
     return ("429" in msg or "RESOURCE_EXHAUSTED" in msg
             or "quota" in msg.lower() or "rate" in msg.lower())
 
 
+def _parse_retry_after(msg: str) -> float | None:
+    """Extract a cooldown (seconds) from a provider error message.
+    Groq: 'Please try again in 4m39.936s'. Returns None if not present."""
+    m = _RETRY_AFTER_RE.search(msg)
+    if not m or not any(m.groups()):
+        return None
+    h = float(m.group(1) or 0)
+    mi = float(m.group(2) or 0)
+    s = float(m.group(3) or 0)
+    total = h * 3600 + mi * 60 + s
+    return total if total > 0 else None
+
+
 def _notify_fallback(from_provider: str, from_model: str,
                      to_provider: str, to_model: str) -> None:
+    same = from_provider == to_provider
+    what = "model" if same else "provider"
     note = (f"⚠️ {from_provider} ({from_model}) hit its quota — "
-            f"switched to {to_provider} ({to_model}) for this call.")
+            f"switched {what} to {to_provider} ({to_model}) for this call.")
     st.session_state["llm_fallback_notice"] = note
     try:
         st.toast(note, icon="⚠️")
@@ -256,43 +278,273 @@ def _notify_fallback(from_provider: str, from_model: str,
         pass
 
 
+# ---------- Quota tracking (lazy, no probe) ----------
+#
+# We LEARN from real failures. When a chat() call raises a quota error we
+# record an entry keyed by (provider, model) in
+# `st.session_state["quota_exhausted"]`. Providers like Groq enforce per-model
+# TPD limits, so other models in the same provider may still be usable —
+# fallback tries those FIRST before crossing to the other provider.
+#
+# Cooldown is derived from the error message when possible (e.g. Groq's
+# "Please try again in 4m39s"); otherwise we use a conservative default.
+
+QUOTA_DEFAULT_COOLDOWN_SECONDS = 5 * 60
+QUOTA_MAX_COOLDOWN_SECONDS = 24 * 3600  # cap so a typo can't lock for years
+
+
+def _quota_map() -> dict:
+    m = st.session_state.get("quota_exhausted")
+    if not isinstance(m, dict):
+        m = {}
+        st.session_state["quota_exhausted"] = m
+    return m
+
+
+def _qkey(provider: str, model: str) -> str:
+    return f"{provider}::{model}"
+
+
+def mark_quota_exhausted(provider: str, model: str, reason: str = "") -> None:
+    cooldown = _parse_retry_after(reason) or QUOTA_DEFAULT_COOLDOWN_SECONDS
+    cooldown = min(cooldown, QUOTA_MAX_COOLDOWN_SECONDS)
+    _quota_map()[_qkey(provider, model)] = {
+        "at": time.time(),
+        "cooldown": cooldown,
+        "provider": provider,
+        "model": model,
+        "reason": reason[:200],
+    }
+
+
+def clear_quota(provider: str | None = None, model: str | None = None) -> None:
+    m = _quota_map()
+    if provider is None:
+        m.clear()
+        return
+    for key in [k for k, v in m.items()
+                if v.get("provider") == provider
+                and (model is None or v.get("model") == model)]:
+        m.pop(key, None)
+
+
+def is_quota_exhausted(provider: str, model: str) -> bool:
+    entry = _quota_map().get(_qkey(provider, model))
+    if not entry:
+        return False
+    cooldown = float(entry.get("cooldown", QUOTA_DEFAULT_COOLDOWN_SECONDS))
+    if time.time() - float(entry.get("at", 0)) > cooldown:
+        _quota_map().pop(_qkey(provider, model), None)
+        return False
+    return True
+
+
+def is_provider_fully_exhausted(provider: str) -> bool:
+    """True only if every known model for this provider is exhausted."""
+    return all(is_quota_exhausted(provider, m) for m in MODELS.get(provider, []))
+
+
+def quota_status(provider: str, model: str) -> dict | None:
+    entry = _quota_map().get(_qkey(provider, model))
+    if not entry:
+        return None
+    cooldown = float(entry.get("cooldown", QUOTA_DEFAULT_COOLDOWN_SECONDS))
+    elapsed = time.time() - float(entry.get("at", 0))
+    left = cooldown - elapsed
+    if left <= 0:
+        _quota_map().pop(_qkey(provider, model), None)
+        return None
+    return {**entry, "seconds_left": int(left)}
+
+
+def all_quota_statuses() -> list[dict]:
+    """Snapshot of currently-active quota entries, for UI display."""
+    out = []
+    for prov, models in MODELS.items():
+        for mdl in models:
+            s = quota_status(prov, mdl)
+            if s:
+                out.append(s)
+    return out
+
+
+def _next_available_model(provider: str, after: str | None) -> str | None:
+    """Return the next model in MODELS[provider] (after `after`, wrapping) that
+    is not currently quota-exhausted. None if all are exhausted."""
+    models = MODELS.get(provider, [])
+    if not models:
+        return None
+    start = (models.index(after) + 1) if after in models else 0
+    order = models[start:] + models[:start]
+    for m in order:
+        if not is_quota_exhausted(provider, m):
+            return m
+    return None
+
+
+def _alt_provider(current: str) -> tuple[str, str] | None:
+    """Pick the other provider + a non-exhausted model from it, if a key is
+    configured. Returns None if no viable alternate exists."""
+    alt = "Groq" if current == "Gemini" else "Gemini"
+    if not resolve_key(alt):
+        return None
+    alt_model = _next_available_model(alt, None)
+    if alt_model is None:
+        return None
+    return alt, alt_model
+
+
+def ensure_quota_or_switch() -> str | None:
+    """Pre-flight check before a chat session. No API call — purely consults
+    the in-memory quota map populated by previous real failures.
+
+    If the active (provider, model) is exhausted, switch to:
+      1) another model in the same provider, if available; else
+      2) a model in the other provider, if a key is configured.
+    """
+    provider = st.session_state.get("provider", DEFAULT_PROVIDER)
+    model = st.session_state.get("model") or MODELS[provider][0]
+    if not is_quota_exhausted(provider, model):
+        return None
+
+    # 1) Same-provider model swap
+    next_model = _next_available_model(provider, model)
+    if next_model:
+        st.session_state["model"] = next_model
+        notice = (f"⚠️ {provider} ({model}) is over its quota — switched "
+                  f"model to {next_model} for this session.")
+        st.session_state["llm_fallback_notice"] = notice
+        try:
+            st.toast(notice, icon="⚠️")
+        except Exception:
+            pass
+        return notice
+
+    # 2) Cross-provider swap
+    alt = _alt_provider(provider)
+    if alt is None:
+        notice = (f"⚠️ All {provider} models are over quota and no alternate "
+                  "provider is configured. Add the other provider's API key "
+                  "to fall back.")
+        st.session_state["llm_fallback_notice"] = notice
+        return notice
+
+    alt_p, alt_m = alt
+    st.session_state["provider"] = alt_p
+    st.session_state["model"] = alt_m
+    notice = (f"⚠️ All {provider} models are over quota — switched provider "
+              f"to {alt_p} ({alt_m}) for this session.")
+    st.session_state["llm_fallback_notice"] = notice
+    try:
+        st.toast(notice, icon="⚠️")
+    except Exception:
+        pass
+    return notice
+
+
+def _fallback_chain(provider: str, model: str) -> list[tuple[str, str]]:
+    """Build an ordered list of (provider, model) candidates to try:
+    1. The requested (provider, model).
+    2. All other models in the same provider (in MODELS order, skipping
+       already-exhausted ones).
+    3. All models of the other provider (if a key is configured), again
+       skipping exhausted ones.
+    """
+    chain: list[tuple[str, str]] = [(provider, model)]
+    for m in MODELS.get(provider, []):
+        if m == model:
+            continue
+        if not is_quota_exhausted(provider, m):
+            chain.append((provider, m))
+
+    other = "Groq" if provider == "Gemini" else "Gemini"
+    if resolve_key(other):
+        for m in MODELS.get(other, []):
+            if not is_quota_exhausted(other, m):
+                chain.append((other, m))
+    return chain
+
+
+def _commit_active(provider: str, model: str) -> None:
+    """Persist the chosen (provider, model) so the sidebar reflects it after a
+    successful fallback, and subsequent calls go straight to it."""
+    st.session_state["provider"] = provider
+    st.session_state["model"] = model
+
+
+def _call_one(provider: str, model: str, messages, temperature, json_mode):
+    if provider == "Groq":
+        return _groq_chat(messages, model, temperature, json_mode)
+    return _gemini_chat(messages, model, temperature, json_mode)
+
+
+def _stream_one(provider: str, model: str, messages, temperature):
+    if provider == "Groq":
+        yield from _groq_stream(messages, model, temperature)
+    else:
+        yield from _gemini_stream(messages, model, temperature)
+
+
 def chat(messages: list[dict], *, model: str | None = None,
          temperature: float = 0.4, json_mode: bool = False) -> str:
-    p = _provider()
-    m = model or _model()
-    try:
-        if p == "Groq":
-            return _groq_chat(messages, m, temperature, json_mode)
-        return _gemini_chat(messages, m, temperature, json_mode)
-    except Exception as e:
-        # Cross-provider fallback: Gemini quota exhausted → try Groq
-        if (p == "Gemini" and _is_quota_error(e)
-                and resolve_key("Groq")):
-            fb = GROQ_QUOTA_FALLBACK_MODEL
-            _notify_fallback(p, m, "Groq", fb)
-            return _groq_chat(messages, fb, temperature, json_mode)
-        raise
+    start_p = _provider()
+    start_m = model or _model()
+    chain = _fallback_chain(start_p, start_m)
+    last_err: Exception | None = None
+
+    for i, (p, m) in enumerate(chain):
+        try:
+            result = _call_one(p, m, messages, temperature, json_mode)
+            if (p, m) != (start_p, start_m):
+                _notify_fallback(start_p, start_m, p, m)
+                _commit_active(p, m)
+            return result
+        except Exception as e:
+            last_err = e
+            if not _is_quota_error(e):
+                raise
+            mark_quota_exhausted(p, m, str(e))
+            # try next candidate
+            continue
+
+    assert last_err is not None
+    raise last_err
 
 
 def stream_chat(messages: list[dict], *, model: str | None = None,
                 temperature: float = 0.6) -> Iterable[str]:
-    p = _provider()
-    m = model or _model()
+    start_p = _provider()
+    start_m = model or _model()
 
     def _safe_stream():
-        try:
-            if p == "Groq":
-                yield from _groq_stream(messages, m, temperature)
+        chain = _fallback_chain(start_p, start_m)
+        last_err: Exception | None = None
+        for p, m in chain:
+            try:
+                # We can't truly "retry mid-stream" once bytes are emitted, but
+                # the SDK raises before yielding on quota errors, so the swap
+                # works in practice.
+                gen = _stream_one(p, m, messages, temperature)
+                first = next(gen, None)
+                if first is None:
+                    if (p, m) != (start_p, start_m):
+                        _notify_fallback(start_p, start_m, p, m)
+                        _commit_active(p, m)
+                    return
+                if (p, m) != (start_p, start_m):
+                    _notify_fallback(start_p, start_m, p, m)
+                    _commit_active(p, m)
+                yield first
+                yield from gen
                 return
-            yield from _gemini_stream(messages, m, temperature)
-        except Exception as e:
-            if (p == "Gemini" and _is_quota_error(e)
-                    and resolve_key("Groq")):
-                fb = GROQ_QUOTA_FALLBACK_MODEL
-                _notify_fallback(p, m, "Groq", fb)
-                yield from _groq_stream(messages, fb, temperature)
-            else:
-                raise
+            except Exception as e:
+                last_err = e
+                if not _is_quota_error(e):
+                    raise
+                mark_quota_exhausted(p, m, str(e))
+                continue
+        if last_err:
+            raise last_err
 
     return _safe_stream()
 
