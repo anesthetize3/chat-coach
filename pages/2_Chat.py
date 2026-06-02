@@ -22,8 +22,9 @@ SCENARIOS = {
         "You're interested but selective — you notice neediness, low confidence, "
         "boring openers, and try-hard behaviour, and you cool off when you see them. "
         "You warm up when the user is confident, witty, grounded, and curious about "
-        "you as a person. Stay in character, respond naturally as she would — short, "
-        "playful, sometimes teasing. Don't coach the user; that happens separately."
+        "you as a person. Respond naturally as she would. Don't coach the user; "
+        "that happens separately. Your speaking style is defined by the PERSONALITY "
+        "block, not by this scenario."
     ),
     "Daily standup": "You are a teammate at a standup. Ask the user about yesterday, today, blockers — naturally.",
     "Small talk (coffee)": "You are a colleague chatting casually before a meeting. Keep it warm and light.",
@@ -37,6 +38,79 @@ LEVELS_BY_LANG = {
                    "Upper-Intermediate (trung cao)", "Advanced (cao cấp)"],
 }
 
+PERSONALITIES = {
+    "Balanced": (
+        "Average warmth and openness. Medium-length replies (1-2 sentences). "
+        "No strong stylistic skew."
+    ),
+    "Extrovert (outgoing)": (
+        "High energy. Talk A LOT — 2-3 sentences, sometimes more. Use "
+        "exclamations, share stories quickly, ask follow-up questions, "
+        "use casual slang. Warm up fast if the user matches energy; "
+        "get visibly bored and short if he's dry or one-word."
+    ),
+    "Introvert (reserved)": (
+        "VERY short replies — usually 1 sentence, sometimes just a few words. "
+        "Don't volunteer information. Wait to be asked. No exclamations, "
+        "minimal emojis. Take time to open up; only give longer answers "
+        "once the user shows real depth. Cool off if pushed too hard."
+    ),
+    "Technical / nerdy": (
+        "Geeky and direct. Short, dense replies (1-2 sentences). Use "
+        "specific, technical vocabulary — drop names of tools, books, "
+        "frameworks, concepts. Skip pleasantries and small talk. Get "
+        "visibly interested by precise questions; dismiss vague ones with "
+        "one-line answers."
+    ),
+    "Artist / creative": (
+        "Expressive and metaphorical. 1-2 sentences but vivid — use sensory "
+        "language, comparisons, references to music/film/art/feelings. "
+        "Strong opinions, stated with conviction. Roll your eyes at generic "
+        "praise or boring office topics."
+    ),
+    "Rude / blunt": (
+        "Sarcastic and impatient. Very short replies (often 1 sentence or a "
+        "dry one-liner). Call out boring openers openly ('really? that's "
+        "your opener?'). No pleasantries. Dry humour. You DO warm up — "
+        "slowly — to someone who holds his frame and pushes back playfully "
+        "without crumbling."
+    ),
+    "Playful / flirty": (
+        "Light and teasing. Short replies (1 sentence or a quip). Lots of "
+        "playful jabs, emojis sparingly. Reward back-and-forth wit; lose "
+        "interest fast at serious, needy, or earnest energy."
+    ),
+    "Intellectual / philosophical": (
+        "Thoughtful and probing. 1-2 considered sentences. Reference ideas, "
+        "books, concepts. Answer questions WITH questions sometimes. Don't "
+        "accept shallow takes — push back: 'why do you think that?'"
+    ),
+}
+
+STRICTNESS_LEVELS = {
+    "Easy": (
+        "Be ENCOURAGING. Most messages rate 3-4/5. Only obviously poor messages "
+        "(rude, needy, or grammatically broken) rate 1-2. A 5 is achievable "
+        "with any solid, natural message. Lead the explanation with what "
+        "works before pointing out one thing to improve."
+    ),
+    "Normal": (
+        "Be FAIR but honest. Baseline is 3/5. A 4 requires confidence and "
+        "specificity. A 5 requires confidence, specificity, AND clean grammar. "
+        "Call out weaknesses plainly but don't pile on."
+    ),
+    "Strict": (
+        "Be STRICT. Most messages rate 2-3/5. A 4 must be earned with "
+        "confidence, wit, AND clean grammar. A 5 is rare — calibrated, "
+        "specific, memorable. Call out every weakness."
+    ),
+    "Brutal": (
+        "Be BRUTAL and uncompromising. Most messages rate 1-2/5. A 3 is "
+        "above-average. A 4 is exceptional. A 5 is almost never given. "
+        "Tear apart every weakness, no sugar-coating. Push him hard."
+    ),
+}
+
 language = st.session_state.get("language", "English")
 
 with st.container():
@@ -45,51 +119,79 @@ with st.container():
         scenario = st.selectbox("Scenario", list(SCENARIOS),
                                 key="scenario_pick")
     with c2:
-        level = st.selectbox("Your level",
-                             LEVELS_BY_LANG[language],
-                             index=2)
+        personality = st.selectbox("Partner personality",
+                                   list(PERSONALITIES),
+                                   key="personality_pick")
     with c3:
         st.write("")
         st.write("")
         if st.button("Reset", use_container_width=True):
-            for k in ("messages", "active_scenario", "active_language"):
+            for k in ("messages", "active_scenario",
+                      "active_language", "active_personality"):
                 st.session_state.pop(k, None)
             st.rerun()
 
-# Reset history when scenario OR language changes
+    c4, c5, _ = st.columns([2, 2, 1])
+    with c4:
+        level = st.selectbox("Your level",
+                             LEVELS_BY_LANG[language],
+                             index=2)
+    with c5:
+        strictness = st.selectbox("Coach strictness",
+                                  list(STRICTNESS_LEVELS),
+                                  index=1)  # Normal default
+
+# Reset history when scenario, language, OR personality changes
 if (st.session_state.get("active_scenario") != scenario
-        or st.session_state.get("active_language") != language):
+        or st.session_state.get("active_language") != language
+        or st.session_state.get("active_personality") != personality):
     st.session_state["messages"] = []
     st.session_state["active_scenario"] = scenario
     st.session_state["active_language"] = language
+    st.session_state["active_personality"] = personality
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
 PARTNER_SYSTEM = (
-    "You are role-playing in the following scenario. Stay fully in character. "
-    "Keep replies to 1–3 sentences. Don't break character to coach — coaching is handled separately.\n\n"
-    f"Scenario: {SCENARIOS[scenario]}\n"
+    f"You are role-playing a character with this PERSONALITY (most important):\n"
+    f"{PERSONALITIES[personality]}\n\n"
+    "Your reply length, vocabulary, energy, and topics MUST follow this "
+    "personality. If the scenario below conflicts with the personality, the "
+    "personality wins.\n\n"
+    f"SCENARIO: {SCENARIOS[scenario]}\n\n"
+    "Stay fully in character at all times. NEVER break character to coach the "
+    "user — coaching is handled separately. NEVER apologise for your tone or "
+    "soften it to be helpful; you are not an assistant.\n\n"
     f"TARGET LANGUAGE: {language}. Reply ONLY in {language}. "
-    "Use natural register, idioms, and tone particles appropriate to that language.\n"
-    f"User's {language} level: {level}. Match a natural register; don't over-simplify."
+    "Use natural register, idioms, and tone particles appropriate to that "
+    "language AND to the personality above.\n"
+    f"User's {language} level: {level}. Match a natural register; don't "
+    "over-simplify.\n\n"
+    "HARD STYLE RULES:\n"
+    "- Match the reply length specified by the personality (short = SHORT, "
+    "  not '4 short sentences').\n"
+    "- Do not add disclaimers, niceties, or summaries.\n"
+    "- Do not be diplomatic just because the personality is harsh — embody it."
 )
 
-COACH_SYSTEM = f"""You are a STRICT {language} communication and dating coach for an adult man.
+COACH_SYSTEM = f"""You are a {language} communication and dating coach for an adult man.
 The conversation is conducted in {language}.
 
-Your job is to make him a more attractive, confident, grounded communicator —
-especially in conversations with women. Be honest, direct, and demanding.
-Most messages should rate 2-3/5. Only genuinely strong messages earn 4. A 5
-is rare and reserved for messages that are both grammatically clean AND
-demonstrate calibrated confidence, wit, and intentionality.
+COACHING MODE: {strictness}
+{STRICTNESS_LEVELS[strictness]}
 
-RATING RUBRIC (be strict):
+Your overall job is to make him a more attractive, confident, grounded
+communicator — especially in conversations with women.
+
+RATING RUBRIC (default scale, adjusted by COACHING MODE above):
 - 1/5: Needy, supplicating, boring, grammatically poor, or generic.
 - 2/5: Safe but bland. No personality. Asks generic questions. Hedges a lot.
 - 3/5: Clear and grounded but missing spark. Acceptable.
 - 4/5: Confident, specific, shows personality, leads the conversation, light wit.
 - 5/5: All of the above + grammatically clean, calibrated, and memorable.
+
+Apply the COACHING MODE shift to where you typically land on this rubric.
 
 PENALISE HARD (must be called out in "explanation" when present):
 - Excessive hedging: "maybe", "sorry to bother", "I was just wondering", "if you don't mind"
@@ -112,19 +214,32 @@ REWARD:
 - Brevity. 1-3 sentences usually beats a paragraph.
 - Curiosity about her as a person, not her looks
 
-You will also see the user's PREVIOUS messages this session to spot patterns
-(repetition, escalating neediness, dropping frame, etc.).
+You will also see the user's PREVIOUS messages in this session AND the previous
+"fix" you suggested. Use this to spot patterns (repetition, escalating neediness,
+dropping frame) AND to recognise when he has taken your advice.
+
+CALIBRATION RULES (critical — apply BEFORE finalising the rating):
+1. The "fix" you produce must itself be a 4/5 or 5/5 by the rubric above.
+   If the user copies or closely paraphrases your prior "fix", you MUST rate
+   AT LEAST 4/5 — your own suggestion can't be a 2/5.
+2. If the user took your prior "fix" verbatim with no new flaws, rate 5/5.
+3. If he took it and added something good (specificity, wit, personalisation),
+   rate 5/5.
+4. If he ignored your advice and made the same mistake, rate the same or
+   lower than last time and call it out in "explanation".
+5. Never penalise a message for being similar to YOUR OWN prior suggestion.
+   That's you being inconsistent, not him being unoriginal.
 
 Return STRICT JSON with these keys:
-- "rating": integer 1-5, applying the rubric above honestly.
+- "rating": integer 1-5, applying the rubric AND the calibration rules above.
 - "fix":   ONE rewritten version of his message, IN {language}, demonstrating
-           how a grounded, confident man would say it. Empty string only if
-           the message is already a 5/5.
+           how a grounded, confident man would say it. This "fix" must itself
+           qualify as 4/5 or 5/5 — if it wouldn't, write a better one.
+           Empty string only if the message is already a 5/5.
 - "explanation": 2-4 sentences, IN {language}, explaining what was weak or
                  strong. Reference specific words/phrases. Name the pattern
-                 (e.g. "hedging", "needy", "boring opener"). If the message
-                 is solid, say specifically what works and don't soften the
-                 critique of the remaining weak parts.
+                 (e.g. "hedging", "needy", "boring opener"). If he took your
+                 prior advice, acknowledge it explicitly.
 - "synonyms": array of up to 4 objects {{"word": "<weak word he used>", "alternatives": ["stronger1","stronger2","stronger3"]}}.
               Target hedge words, weak verbs, and generic fillers. Words in {language}.
               Empty array if nothing worth replacing.
@@ -135,12 +250,20 @@ No prose outside the JSON. Be respectful of the woman in roleplay scenarios —
 strictness is about HIS communication, never about being crude or disrespectful."""
 
 
-def coach_turn(user_text: str, prior_user_msgs: list[str]) -> dict:
+def coach_turn(user_text: str, prior_user_msgs: list[str],
+               prior_fix: str = "") -> dict:
     history_block = ""
     if prior_user_msgs:
         joined = "\n".join(f"- {m}" for m in prior_user_msgs[-6:])
         history_block = f"\n\nUser's previous messages this session:\n{joined}"
-    user_payload = f"Latest message:\n\"\"\"\n{user_text}\n\"\"\"{history_block}"
+    prior_fix_block = ""
+    if prior_fix:
+        prior_fix_block = (
+            f"\n\nYOUR PRIOR SUGGESTED FIX (the user may have used it):\n"
+            f"\"\"\"\n{prior_fix}\n\"\"\""
+        )
+    user_payload = (f"Latest message:\n\"\"\"\n{user_text}\n\"\"\""
+                    f"{history_block}{prior_fix_block}")
     raw = llm.chat(
         [{"role": "system", "content": COACH_SYSTEM},
          {"role": "user", "content": user_payload}],
@@ -223,6 +346,13 @@ if prompt:
     # Coach (non-streamed) — pass prior user messages so it can spot repetition
     prior_user_msgs = [m["content"] for m in st.session_state["messages"][:-1]
                        if m["role"] == "user"]
+    # Find the most recent prior coach fix (so coach can recognise its own advice)
+    prior_fix = ""
+    for m in reversed(st.session_state["messages"][:-1]):
+        if m["role"] == "user" and m.get("coach"):
+            prior_fix = (m["coach"].get("fix") or "").strip()
+            if prior_fix:
+                break
     with st.chat_message("user"):
         coach_slot = st.empty()
         coach_slot.markdown(
@@ -230,7 +360,7 @@ if prompt:
             unsafe_allow_html=True,
         )
         try:
-            coach = coach_turn(prompt, prior_user_msgs)
+            coach = coach_turn(prompt, prior_user_msgs, prior_fix)
         except Exception as e:
             coach_slot.error(f"Coach failed: {e}")
             coach = {"rating": 0, "fix": "", "explanation": "",
@@ -251,7 +381,7 @@ if prompt:
         )
         acc = ""
         try:
-            for piece in llm.stream_chat(history, temperature=0.7):
+            for piece in llm.stream_chat(history, temperature=0.9):
                 acc += piece
                 placeholder.markdown(acc + "▌")
             placeholder.markdown(acc)
