@@ -12,13 +12,13 @@ ui.hero(
     badge="v2 · powered by Groq",
 )
 
-c1, c2 = st.columns(2, gap="large")
+c1, c2, c3 = st.columns(3, gap="large")
 with c1:
     st.markdown(
         "<div class='cc-card'>"
         "<h4>✍️ Polish</h4>"
-        "<p>Paste any draft — email, message, post. Get an inline diff of fixes, "
-        "a clean rewrite, and short notes on grammar, tone, and word choice.</p>"
+        "<p>Paste any draft — email, message, post. Get a side-by-side phrase "
+        "comparison plus comments and recommendations.</p>"
         "</div>",
         unsafe_allow_html=True,
     )
@@ -30,14 +30,27 @@ with c2:
     st.markdown(
         "<div class='cc-card'>"
         "<h4>💬 Chat Partner</h4>"
-        "<p>Pick a scenario — interview, standup, small talk. Practice in real time. "
-        "Get a one-line coaching note after each of your messages.</p>"
+        "<p>Practice real conversations — including talking to a woman. "
+        "Get a strict per-turn coaching note that pushes you to be sharper.</p>"
         "</div>",
         unsafe_allow_html=True,
     )
     st.write("")
     if st.button("Open Chat Partner →", use_container_width=True, type="primary"):
         st.switch_page("pages/2_Chat.py")
+
+with c3:
+    st.markdown(
+        "<div class='cc-card'>"
+        "<h4>🐛 Feedback</h4>"
+        "<p>Report bugs or request features. Stored as GitHub Issues so you "
+        "can reply, close, or reject them right here.</p>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+    st.write("")
+    if st.button("Open Feedback →", use_container_width=True, type="primary"):
+        st.switch_page("pages/3_Feedback.py")
 
 st.write("")
 st.markdown(
