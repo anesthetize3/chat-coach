@@ -21,9 +21,16 @@ load_dotenv()
 PROVIDERS = ["Gemini", "Groq"]
 
 MODELS = {
-    "Groq": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"],
+    "Groq": [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "meta-llama/llama-4-scout-17b-16e-instruct",
+        "meta-llama/llama-4-maverick-17b-128e-instruct",
+    ],
     "Gemini": ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.5-flash-lite"],
 }
+
+GROQ_QUOTA_FALLBACK_MODEL = "llama-3.3-70b-versatile"
 
 DEFAULT_PROVIDER = "Gemini"
 DEFAULT_MODEL = "gemini-2.5-flash"
@@ -232,22 +239,62 @@ def _gemini_stream(messages, model, temperature):
 
 # ---------- Public API ----------
 
+def _is_quota_error(e: Exception) -> bool:
+    msg = str(e)
+    return ("429" in msg or "RESOURCE_EXHAUSTED" in msg
+            or "quota" in msg.lower() or "rate" in msg.lower())
+
+
+def _notify_fallback(from_provider: str, from_model: str,
+                     to_provider: str, to_model: str) -> None:
+    note = (f"⚠️ {from_provider} ({from_model}) hit its quota — "
+            f"switched to {to_provider} ({to_model}) for this call.")
+    st.session_state["llm_fallback_notice"] = note
+    try:
+        st.toast(note, icon="⚠️")
+    except Exception:
+        pass
+
+
 def chat(messages: list[dict], *, model: str | None = None,
          temperature: float = 0.4, json_mode: bool = False) -> str:
     p = _provider()
     m = model or _model()
-    if p == "Groq":
-        return _groq_chat(messages, m, temperature, json_mode)
-    return _gemini_chat(messages, m, temperature, json_mode)
+    try:
+        if p == "Groq":
+            return _groq_chat(messages, m, temperature, json_mode)
+        return _gemini_chat(messages, m, temperature, json_mode)
+    except Exception as e:
+        # Cross-provider fallback: Gemini quota exhausted → try Groq
+        if (p == "Gemini" and _is_quota_error(e)
+                and resolve_key("Groq")):
+            fb = GROQ_QUOTA_FALLBACK_MODEL
+            _notify_fallback(p, m, "Groq", fb)
+            return _groq_chat(messages, fb, temperature, json_mode)
+        raise
 
 
 def stream_chat(messages: list[dict], *, model: str | None = None,
                 temperature: float = 0.6) -> Iterable[str]:
     p = _provider()
     m = model or _model()
-    if p == "Groq":
-        return _groq_stream(messages, m, temperature)
-    return _gemini_stream(messages, m, temperature)
+
+    def _safe_stream():
+        try:
+            if p == "Groq":
+                yield from _groq_stream(messages, m, temperature)
+                return
+            yield from _gemini_stream(messages, m, temperature)
+        except Exception as e:
+            if (p == "Gemini" and _is_quota_error(e)
+                    and resolve_key("Groq")):
+                fb = GROQ_QUOTA_FALLBACK_MODEL
+                _notify_fallback(p, m, "Groq", fb)
+                yield from _groq_stream(messages, fb, temperature)
+            else:
+                raise
+
+    return _safe_stream()
 
 
 def parse_json(text: str) -> dict:

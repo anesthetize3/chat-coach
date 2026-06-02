@@ -13,6 +13,10 @@ ui.hero("✍️ Polish",
         "Side-by-side phrase comparison with comments and recommendations.",
         badge="Polish")
 
+_notice = st.session_state.pop("llm_fallback_notice", None)
+if _notice:
+    st.warning(_notice)
+
 TONES = ["Keep tone", "More professional", "Friendlier", "More concise",
          "More confident", "More diplomatic"]
 LEVELS = ["Light (grammar only)", "Standard (grammar + clarity)",

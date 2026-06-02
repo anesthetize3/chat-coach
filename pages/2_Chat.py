@@ -11,6 +11,11 @@ ui.hero("💬 Chat Partner",
         "Role-play a scenario. After each of your messages, get a short coaching note.",
         badge="Chat")
 
+# Show last LLM fallback notice (e.g. Gemini quota → switched to Groq)
+_notice = st.session_state.pop("llm_fallback_notice", None)
+if _notice:
+    st.warning(_notice)
+
 SCENARIOS = {
     "Talking to a woman (dating)": (
         "You are a smart, attractive woman the user just matched with (or met). "
@@ -149,17 +154,34 @@ def coach_turn(user_text: str, prior_user_msgs: list[str]) -> dict:
                 "synonyms": [], "tip": ""}
 
 
+SCORE_FACE = {5: "😎", 4: "😊", 3: "😐", 2: "😕", 1: "😬", 0: "🤔"}
+
+
 def render_coach(coach: dict) -> str:
     rating = int(coach.get("rating", 0) or 0)
+    rating = max(0, min(5, rating))
     score_kind = "ok" if rating >= 4 else "warn" if rating == 3 else "err"
-    score = (f"<span class='cc-pill {score_kind}'>"
-             f"Score {rating}/5</span>")
+    face = SCORE_FACE.get(rating, "🤔")
+    face_color = ("var(--cc-ok)" if rating >= 4
+                  else "var(--cc-warn)" if rating == 3
+                  else "var(--cc-danger)")
+    score_pill = (f"<span class='cc-pill {score_kind}' "
+                  f"style='font-size:0.95rem;padding:4px 12px'>"
+                  f"Score {rating}/5</span>")
+    face_html = (
+        f"<span style='font-size:2.4rem;line-height:1;"
+        f"display:inline-block;vertical-align:middle;"
+        f"filter:drop-shadow(0 0 6px {face_color}55);"
+        f"margin-right:10px'>{face}</span>"
+    )
+    score = (f"<div style='display:flex;align-items:center;gap:6px;"
+             f"margin:4px 0 8px 0'>{face_html}{score_pill}</div>")
     fix = (coach.get("fix") or "").strip()
     explanation = (coach.get("explanation") or "").strip()
     tip = (coach.get("tip") or "").strip()
     synonyms = coach.get("synonyms") or []
 
-    parts = [f"<b>Coach</b> &nbsp; {score}"]
+    parts = [f"<b>Coach</b>{score}"]
     if fix:
         parts.append(f"<br><b>Try:</b> <i>{fix}</i>")
     if explanation:
@@ -201,17 +223,20 @@ if prompt:
     # Coach (non-streamed) — pass prior user messages so it can spot repetition
     prior_user_msgs = [m["content"] for m in st.session_state["messages"][:-1]
                        if m["role"] == "user"]
-    try:
-        coach = coach_turn(prompt, prior_user_msgs)
-    except Exception as e:
-        st.error(f"Coach failed: {e}")
-        coach = {"rating": 0, "fix": "", "explanation": "",
-                 "synonyms": [], "tip": ""}
-    st.session_state["messages"][-1]["coach"] = coach
-
-    # Show coach immediately under user msg
     with st.chat_message("user"):
-        st.markdown(render_coach(coach), unsafe_allow_html=True)
+        coach_slot = st.empty()
+        coach_slot.markdown(
+            "<div class='cc-note'>🧠 <i>Coach is thinking…</i></div>",
+            unsafe_allow_html=True,
+        )
+        try:
+            coach = coach_turn(prompt, prior_user_msgs)
+        except Exception as e:
+            coach_slot.error(f"Coach failed: {e}")
+            coach = {"rating": 0, "fix": "", "explanation": "",
+                     "synonyms": [], "tip": ""}
+        coach_slot.markdown(render_coach(coach), unsafe_allow_html=True)
+    st.session_state["messages"][-1]["coach"] = coach
 
     # Partner reply (streamed)
     history = [{"role": "system", "content": PARTNER_SYSTEM}] + [
@@ -220,6 +245,10 @@ if prompt:
     ]
     with st.chat_message("assistant"):
         placeholder = st.empty()
+        placeholder.markdown(
+            "<span style='color:var(--cc-muted)'>💭 <i>Typing…</i></span>",
+            unsafe_allow_html=True,
+        )
         acc = ""
         try:
             for piece in llm.stream_chat(history, temperature=0.7):
