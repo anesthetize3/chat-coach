@@ -1,0 +1,12 @@
+---
+type: page
+title: Automated Data Deletion
+listed: true
+description: 
+index_title: Automated Data Deletion
+hidden: true
+keywords: 
+tags: 
+---
+
+Please read the [Retention Policy Configuration](../configuration/data-management/retention-policy-configuration.md) guide.
