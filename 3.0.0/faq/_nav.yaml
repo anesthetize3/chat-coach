@@ -1,0 +1,47 @@
+items:
+  - category: General
+    items:
+      - purpose-of-your-service-product
+      - supported-file-types
+      - ioc
+      - extracted-iocs-types
+      - upload-an-archive
+      - archive-password
+      - analyze-the-same-file
+      - advanced-search
+      - api
+      - timezone-preferences
+      - retrieving-api-keys-guidelinepnu
+      - how-long-are-previous-versions-of-sandbox-supported
+      - how-to-update-yara-rules-in-an-air-gapped-offline-environment
+      - i-am-receiving-a-timeout-generating-a-pdf--what-can-i-do-
+      - how-to-disable----terms-of-use-and-privacy-policy----checkbox-in
+      - why-do-you-receive-error-message--failed-to-prepare-repositories
+      - how-to-disable-a-threat-indicator-
+      - what-are-the-ai-ml-sandbox-offerings-
+      - sandbox-ioc-feed-reputation-service
+      - '---what-is-the-latest-metadefender-sandbox-version-'
+      - where-does-metadefender-sandbox-temporarily-stores-samples-
+      - how-to-configure-smtp-server-on-metadefender-sanbox-to-send-noti
+  - category: Deployment
+    items:
+      - do-you-offer-a-pure-offline-deployment-upgrade-process-
+      - asd
+      - how-to-backup-and-restore-metadefender-sandbox-mongodb-and-arang
+      - which-paths-should-be-excluded-from-av-engine-edr-agent-scans-on
+  - category: Engine
+    items:
+      - sandbox-technology
+      - efficacy
+  - category: 'URL Analysis'
+    items:
+      - what-url-analysis-capabilities-are-in-filescan-
+      - brand-detection
+      - what-is-the-maximum-url-length-limit-
+  - category: Licensing
+    items:
+      - commercial-licensing
+      - what-is-the-difference-between-filescan-io-and-opswat-filescan-c
+      - is-free-api-same-as-commercial
+      - api-deprecation-and-replacement-notice
+      - is-metadefender-sandbox-being-discontinued-with-metadefender-aet
