@@ -1,0 +1,22 @@
+items:
+  - category: Overview
+    items:
+      - why-opswat-filescan-
+      - technical-datasheet
+      - verdict
+      - poc-guide
+  - category: Capabilities
+    items:
+      - engine-features
+      - supported-file-types
+      - page: executable-analysis
+        items:
+          - executable-analysis/supported-malwares-for-config-extraction
+          - executable-analysis/supported-packers-for-unpacking
+      - showcase-reports
+      - mitre-attack-coverage
+      - integrations
+  - category: Deployment
+    items:
+      - installed-packages-by-filescan
+      - domains-contacted-during-installation

@@ -1,0 +1,14 @@
+items:
+  - category: General
+    items:
+      - password-reset
+  - category: Deployment
+    items:
+      - installation-troubleshooting
+      - installing-pip3-dependencies
+      - dns-and-connectivity-issues
+  - category: Operations
+    items:
+      - about-logging-commands
+      - collect-logfiles
+      - logging
