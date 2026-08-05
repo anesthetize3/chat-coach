@@ -1,0 +1,15 @@
+name: 2.1.0
+published: true
+documentations:
+    - datasheet
+    - installation
+    - adminguide
+    - configuration
+    - integrations
+    - release-notes
+    - troubleshooting
+    - faq
+    - best-practice
+references:
+    - asdf
+    - metadefender-sandbox-api-reference
