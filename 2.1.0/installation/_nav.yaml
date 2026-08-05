@@ -1,0 +1,17 @@
+items:
+  - installation-introduction
+  - technical-requirements
+  - page: quick-installation
+    items:
+      - quick-installation/installation-with-proxy
+      - quick-installation/notes-for-air-gapped-environments
+      - quick-installation/installation-options
+  - page: quick-upgrade
+    items:
+      - quick-upgrade/operating-system-upgrade
+  - offline-installation
+  - cis-os-hardening-guidelines
+  - license-activation
+  - ocm-registration
+  - network-setup
+  - uninstall-guide
