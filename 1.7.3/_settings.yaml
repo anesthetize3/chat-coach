@@ -1,0 +1,15 @@
+name: 1.7.3
+published: true
+documentations:
+    - installation
+    - configuration
+    - operating
+    - datasheet
+    - integrations
+    - fsbroker
+    - fstransform
+    - faq
+    - release-notes
+    - troubleshooting
+references:
+    - opswat-filescan
