@@ -1,8 +1,0 @@
-title: 'AWS Quick Launch'
-published: true
-description: 'Launching an EC2 instance from your AMI baseline'
-collapsed: true
-collapsedCategories: false
-showLastUpdated: false
-showLastUpdateUser: false
-locale: en_us
