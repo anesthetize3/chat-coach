@@ -1,0 +1,25 @@
+items:
+  - category: 'MetaDefender Core Integrations'
+    items:
+      - page: metadefender-core
+        items:
+          - metadefender-core/changelog
+      - md-core-engine
+      - metadefender-multiscanning
+  - category: 'SOAR Integrations'
+    items:
+      - cortex-xsoar
+      - splunk-soar
+      - assemblyline-4
+  - category: 'Container Integrations'
+    items:
+      - docker-integration
+  - category: 'Cloud Service Integrations'
+    items:
+      - reputation-api-integration
+      - threat-intelligence-search-api
+      - chatgpt-executive-summary-generation
+  - category: Postman
+    items:
+      - threat-intel-reputation-postman
+      - threat-intel-search-postman
