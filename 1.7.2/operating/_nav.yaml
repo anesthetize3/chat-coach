@@ -1,0 +1,30 @@
+items:
+  - architecture
+  - frontend-server
+  - backend-server
+  - installation-guide
+  - category: 'Use Cases'
+    items:
+      - page: scan-file
+        items:
+          - scan-file/scan-file-UI
+          - scan-file/scan-file-API
+      - page: scan-url
+        items:
+          - scan-url/scan-url-UI
+          - scan-url/scan-url-API
+      - page: search-ip-domain-url
+        items:
+          - search-ip-domain-url/search-ip-on-the-ui
+          - search-ip-domain-url/search-domain-on-the-ui
+          - search-ip-domain-url/search-url-on-the-ui
+      - search-by-hash
+      - reports
+      - profile
+      - api-documentation
+      - admin-panel
+      - user-management
+      - jobs
+      - settings
+      - scan-source
+      - other
