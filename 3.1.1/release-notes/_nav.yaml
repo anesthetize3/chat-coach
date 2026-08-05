@@ -1,0 +1,28 @@
+items:
+  - release-notes-latest
+  - page: previous-change-logs
+    items:
+      - previous-change-logs/release-notes-v310
+      - previous-change-logs/release-notes-v300
+      - previous-change-logs/release-notes-v251
+      - previous-change-logs/release-notes-v250
+      - previous-change-logs/release-notes-v240
+      - previous-change-logs/release-notes-v230
+      - previous-change-logs/release-notes-v221
+      - previous-change-logs/release-notes-v220
+      - previous-change-logs/release-notes-v210
+      - previous-change-logs/release-notes-v200
+      - previous-change-logs/release-notes-v193
+      - previous-change-logs/release-notes-v192
+      - previous-change-logs/release-notes-v191
+      - previous-change-logs/release-notes-v190
+      - previous-change-logs/release-notes-v181
+      - previous-change-logs/release-notes-v180
+      - previous-change-logs/release-notes-v174
+      - previous-change-logs/release-notes-v173
+      - previous-change-logs/release-notes-v172
+      - previous-change-logs/release-notes-v171
+      - previous-change-logs/release-notes-v170
+      - previous-change-logs/release-notes-v163
+      - previous-change-logs/release-notes-v161
+      - previous-change-logs/release-notes-v160

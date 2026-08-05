@@ -1,0 +1,32 @@
+items:
+  - category: General
+    items:
+      - how-to-perform-basic-troubleshooting-for-metadefender-sandbox-
+      - password-reset
+      - slow-web-interface-in-offline-environment
+      - low-disk-space
+      - license-file-corruption
+      - why-is-metadefender-sandbox-failing-to-retrieve-reputation-data-
+      - how-do-i-get-a-false-detection--false-positive-or-false-negative
+      - can-i-change-metadefender-sandbox-web-ui---s-port-
+      - how-to-solve-the--processing-error--reason--subtask-timeout---in
+      - my-offline-deployment-of-metadefender-sandbox-has-lost-its-licen
+      - how-to-configure-saml-2-0-authentication-between-metadefender-sa
+      - how-to-fix-apt-exit-code-100----hash-sum-mismatch----during-meta
+      - why-can---t-i-find-the-log-file-collection-zip-
+      - how-to-set-a-custom-api-key-for-the-user-profile
+      - how-do-i-license-metadefender-aether-through-myopswat
+  - category: Deployment
+    items:
+      - installation-troubleshooting
+      - dns-and-connectivity-issues
+      - docker-related-issues
+      - enhancing-software-resilience-and-achieving-cis-level-1-standard
+      - arangodb-corruption-issue
+      - nginx-issue-ipv6-disabled
+      - failed-upgrade-to-3-0-from-earlier-versions
+  - category: Operations
+    items:
+      - services-and-system-components
+      - collect-logfiles
+      - logging
