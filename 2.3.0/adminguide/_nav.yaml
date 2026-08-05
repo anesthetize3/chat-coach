@@ -1,0 +1,28 @@
+items:
+  - category: 'COMMON OPERATIONS'
+    items:
+      - page: upload-file
+        items:
+          - upload-file/scan-file-UIugg2fh
+          - upload-file/scan-file-APIc3v
+      - page: upload-url
+        items:
+          - upload-url/scan-url-UIofw
+          - upload-url/scan-url-API3l3
+      - scan-file-UIugg
+  - category: 'ADMINISTRATIVE FUNCTIONS'
+    items:
+      - e-mail-notifications
+      - add-user
+      - remove-user-account
+      - user-group-access
+      - features-access
+      - api-quota
+      - retention-policy-configuratione70
+      - page: authentication---external
+        items:
+          - authentication---external/microsoft-entra
+          - authentication---external/okta
+  - category: 'THREAT HUNTING AND SEARCH'
+    items:
+      - advanced-search
