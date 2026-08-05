@@ -1,0 +1,62 @@
+items:
+  - category: 'Architectural Overview'
+    items:
+      - high-throughput-configuration
+      - multi-server-deployment
+      - sinlge-server-deployment
+  - category: 'FRONTEND CONFIGURATION'
+    items:
+      - ssl-certificates
+      - imap-integration
+      - page: general-settings
+        items:
+          - general-settings/general
+          - general-settings/engine
+          - general-settings/maintenance
+          - general-settings/appearence
+      - page: user-and-authentication-management
+        items:
+          - user-and-authentication-management/authentication
+          - user-and-authentication-management/terms-of-use
+          - user-and-authentication-management/third-party
+      - page: data-management
+        items:
+          - data-management/database
+          - data-management/storage
+          - data-management/retention-policy-configuration
+          - data-management/s3-report-storage
+      - page: communication-and-integration
+        items:
+          - communication-and-integration/providers
+          - communication-and-integration/reputation
+          - communication-and-integration/email
+          - communication-and-integration/chat-gpt
+          - communication-and-integration/ocm
+          - communication-and-integration/misp
+      - page: functionality-extensions
+        items:
+          - functionality-extensions/threat-pattern-correlator
+          - functionality-extensions/search
+          - functionality-extensions/extra-button
+      - page: monitoring-and-logging
+        items:
+          - monitoring-and-logging/jobs
+          - monitoring-and-logging/healthcheck
+          - monitoring-and-logging/audit-logger
+          - monitoring-and-logging/cef-syslog-feedback
+      - execution-profiles
+  - category: 'BACKEND CONFIGURATION'
+    items:
+      - file---folder-structure
+      - engine-config-storage
+      - page: scan
+        items:
+          - scan/engine-config-basic-features
+          - scan/engine-config-dynamic-analysis
+          - scan/offline-reputation-configuration
+          - scan/engine-config-osint-lookups
+          - scan/engine-config-static-analysis
+          - scan/verdict-adjustment
+          - scan/yara-rules
+      - transform-exit-codes
+      - engine-config-api
