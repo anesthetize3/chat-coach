@@ -1,0 +1,22 @@
+items:
+  - category: General
+    items:
+      - page: password-reset
+        items:
+          - password-reset/where-to-get-the-audit-logs-for-metadefender-sandbox-
+      - slow-web-interface-in-offline-environment
+      - low-disk-space
+      - license-file-corruption
+  - category: Deployment
+    items:
+      - installation-troubleshooting
+      - dns-and-connectivity-issues
+      - docker-related-issues
+      - enhancing-software-resilience-and-achieving-cis-level-1-standard
+      - arangodb-corruption-issue
+      - why-is-my-sandbox-scan-timing-out-
+  - category: Operations
+    items:
+      - services-and-system-components
+      - collect-logfiles
+      - logging
