@@ -4,7 +4,7 @@ title: Audit Logging for Admin Settings and User Authentication
 listed: true
 description: 
 index_title: Audit Logging for Admin Settings and User Authentication
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

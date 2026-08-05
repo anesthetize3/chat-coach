@@ -4,7 +4,7 @@ title: Extra Button
 listed: true
 description: 
 index_title: Extra Button
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

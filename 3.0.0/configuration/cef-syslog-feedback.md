@@ -4,7 +4,7 @@ title: CEF Syslog Feedback
 listed: true
 description: 
 index_title: CEF Syslog Feedback
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

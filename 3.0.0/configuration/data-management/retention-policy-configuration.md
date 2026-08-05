@@ -4,7 +4,7 @@ title: Retention Policy Configuration
 listed: true
 description: 
 index_title: Retention Policy Configuration
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

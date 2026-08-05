@@ -4,7 +4,7 @@ title: Zero-Day Threat Identification
 listed: true
 description: 
 index_title: Zero-Day Threat Identification
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

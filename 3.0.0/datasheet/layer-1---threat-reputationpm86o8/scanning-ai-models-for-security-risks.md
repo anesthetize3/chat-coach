@@ -4,7 +4,7 @@ title: Scanning AI Models for Security Risks
 listed: true
 description: 
 index_title: Scanning AI Models for Security Risks
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

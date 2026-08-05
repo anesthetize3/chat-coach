@@ -4,7 +4,7 @@ title: Authentication
 listed: true
 description: 
 index_title: Authentication
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

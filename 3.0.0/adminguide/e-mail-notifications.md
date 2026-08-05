@@ -4,7 +4,7 @@ title: Registration
 listed: true
 description: 
 index_title: Registration
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

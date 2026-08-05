@@ -4,7 +4,7 @@ title: Aether Tags
 listed: true
 description: 
 index_title: Aether Tags
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

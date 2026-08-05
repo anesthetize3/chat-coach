@@ -4,7 +4,7 @@ title: Database
 listed: true
 description: 
 index_title: Database
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

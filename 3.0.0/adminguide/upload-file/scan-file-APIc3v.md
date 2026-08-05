@@ -4,7 +4,7 @@ title: Upload file with API
 listed: true
 description: 
 index_title: Upload file with API
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

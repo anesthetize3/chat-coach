@@ -4,7 +4,7 @@ title: Jobs
 listed: true
 description: 
 index_title: Jobs
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

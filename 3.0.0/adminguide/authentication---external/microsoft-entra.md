@@ -4,7 +4,7 @@ title: Microsoft Entra
 listed: true
 description: 
 index_title: Microsoft Entra
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: Appearence
 listed: true
 description: 
 index_title: Appearence
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

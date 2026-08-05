@@ -4,7 +4,7 @@ title: Automated Data Deletion
 listed: true
 description: 
 index_title: Automated Data Deletion
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

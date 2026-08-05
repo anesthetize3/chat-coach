@@ -4,7 +4,7 @@ title: Scan URL on the UI
 listed: true
 description: 
 index_title: Scan URL on the UI
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: Threat Intelligence Introduction
 listed: true
 description: 
 index_title: Threat Intelligence Introduction
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

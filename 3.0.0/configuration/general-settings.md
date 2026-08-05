@@ -4,7 +4,7 @@ title: General Settings
 listed: true
 description: 
 index_title: General Settings
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

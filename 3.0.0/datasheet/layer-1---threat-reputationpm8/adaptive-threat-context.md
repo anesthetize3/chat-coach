@@ -4,7 +4,7 @@ title: Adaptive Threat Context
 listed: true
 description: 
 index_title: Adaptive Threat Context
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

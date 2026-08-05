@@ -4,7 +4,7 @@ title: High-Throughput Configuration
 listed: true
 description: 
 index_title: High-Throughput Configuration
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

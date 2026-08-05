@@ -4,7 +4,7 @@ title: Layer 3 - Threat Scoring
 listed: true
 description: 
 index_title: Layer 3 - Threat Scoring
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

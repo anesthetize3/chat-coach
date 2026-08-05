@@ -4,7 +4,7 @@ title: Terms of Use
 listed: true
 description: 
 index_title: Terms of Use
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

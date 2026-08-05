@@ -4,7 +4,7 @@ title: Storage
 listed: true
 description: 
 index_title: Storage
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

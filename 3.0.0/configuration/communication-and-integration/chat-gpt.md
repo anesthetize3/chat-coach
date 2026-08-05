@@ -4,7 +4,7 @@ title: Chat GPT
 listed: true
 description: 
 index_title: Chat GPT
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

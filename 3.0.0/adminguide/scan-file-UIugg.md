@@ -4,7 +4,7 @@ title: Upload functions (detailed)
 listed: true
 description: 
 index_title: Upload functions (detailed)
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

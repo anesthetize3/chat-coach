@@ -4,7 +4,7 @@ title: MITRE ATT&CK Coverage
 listed: true
 description: 
 index_title: MITRE ATT&CK Coverage
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

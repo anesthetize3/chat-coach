@@ -4,7 +4,7 @@ title: Third Party
 listed: true
 description: 
 index_title: Third Party
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

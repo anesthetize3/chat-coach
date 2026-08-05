@@ -4,7 +4,7 @@ title: Threat Pattern Correlator
 listed: true
 description: 
 index_title: Threat Pattern Correlator
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

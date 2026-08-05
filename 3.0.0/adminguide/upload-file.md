@@ -4,7 +4,7 @@ title: Upload file
 listed: true
 description: 
 index_title: Upload file
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

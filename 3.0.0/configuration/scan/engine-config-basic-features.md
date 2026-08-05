@@ -4,7 +4,7 @@ title: Basic Features
 listed: true
 description: 
 index_title: Basic Features
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

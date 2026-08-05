@@ -4,7 +4,7 @@ title: Static Analysis
 listed: true
 description: 
 index_title: Static Analysis
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

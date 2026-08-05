@@ -4,7 +4,7 @@ title: Search
 listed: true
 description: 
 index_title: Search
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

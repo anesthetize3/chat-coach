@@ -4,7 +4,7 @@ title: File / Folder Structure
 listed: true
 description: 
 index_title: File / Folder Structure
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

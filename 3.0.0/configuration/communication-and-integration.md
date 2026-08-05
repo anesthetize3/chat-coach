@@ -4,7 +4,7 @@ title: Communication and Integration
 listed: true
 description: 
 index_title: Communication and Integration
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

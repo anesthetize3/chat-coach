@@ -4,7 +4,7 @@ title: Supported File Types
 listed: true
 description: 
 index_title: Supported File Types
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

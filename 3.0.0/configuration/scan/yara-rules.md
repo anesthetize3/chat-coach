@@ -4,7 +4,7 @@ title: YARA Rules
 listed: true
 description: 
 index_title: YARA Rules
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

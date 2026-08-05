@@ -4,7 +4,7 @@ title: Healthcheck
 listed: true
 description: 
 index_title: Healthcheck
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

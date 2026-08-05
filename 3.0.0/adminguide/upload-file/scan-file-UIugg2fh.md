@@ -4,7 +4,7 @@ title: Upload a file on the UI
 listed: true
 description: 
 index_title: Upload a file on the UI
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: Hidden Artifact Extraction
 listed: true
 description: 
 index_title: Hidden Artifact Extraction
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

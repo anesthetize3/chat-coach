@@ -4,7 +4,7 @@ title: General
 listed: true
 description: 
 index_title: General
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

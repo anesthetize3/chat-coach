@@ -4,7 +4,7 @@ title: MISP
 listed: true
 description: 
 index_title: MISP
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

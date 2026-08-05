@@ -4,7 +4,7 @@ title: Remove user account
 listed: true
 description: 
 index_title: Remove user account
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

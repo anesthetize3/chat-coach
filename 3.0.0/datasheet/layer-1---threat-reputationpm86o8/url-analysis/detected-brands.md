@@ -4,7 +4,7 @@ title: What brands can the Brand Spoofing Detector catch?
 listed: true
 description: 
 index_title: What brands can the Brand Spoofing Detector catch?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

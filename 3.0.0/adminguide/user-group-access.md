@@ -4,7 +4,7 @@ title: User Groups
 listed: true
 description: 
 index_title: User Groups
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

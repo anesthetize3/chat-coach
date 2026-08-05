@@ -4,7 +4,7 @@ title: Verdict Adjustment
 listed: true
 description: 
 index_title: Verdict Adjustment
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

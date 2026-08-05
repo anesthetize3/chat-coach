@@ -4,7 +4,7 @@ title: Email Notifications
 listed: true
 description: 
 index_title: Email Notifications
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

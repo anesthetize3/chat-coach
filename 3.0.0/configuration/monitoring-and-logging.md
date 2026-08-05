@@ -4,7 +4,7 @@ title: Monitoring and Logging
 listed: true
 description: 
 index_title: Monitoring and Logging
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

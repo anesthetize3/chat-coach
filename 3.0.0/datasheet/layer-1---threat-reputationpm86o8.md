@@ -4,7 +4,7 @@ title: Layer 2 - Dynamic Analysis
 listed: true
 description: 
 index_title: Layer 2 - Dynamic Analysis
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

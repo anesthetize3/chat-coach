@@ -4,7 +4,7 @@ title: Adding users
 listed: true
 description: 
 index_title: Adding users
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---
