@@ -1,0 +1,40 @@
+items:
+  - category: 'COMMON OPERATIONS'
+    items:
+      - page: upload-file
+        items:
+          - upload-file/scan-file-UIugg2fh
+          - upload-file/scan-file-APIc3v
+      - page: upload-url
+        items:
+          - upload-url/scan-url-UIofw
+          - upload-url/scan-url-API3l3
+      - scan-file-UIugg
+  - category: 'ADMINISTRATIVE FUNCTIONS'
+    items:
+      - e-mail-notifications
+      - user-group-access
+      - add-user
+      - remove-user-account
+      - retention-policy-configuratione70
+      - best-practice-configurations
+      - page: authentication---external
+        items:
+          - authentication---external/ms-entra
+  - category: 'THREAT HUNTING AND SEARCH'
+  - category: Cloud
+    items:
+      - installation-guide
+  - category: 'Threat Analysis'
+    items:
+      - threat-intelligence-introduction
+      - advanced-search
+      - page: threat-intelligence
+        items:
+          - threat-intelligence/similarity-search
+          - threat-intelligence/additional-scan-steps
+          - threat-intelligence/reputation-lookup
+          - threat-intelligence/similarity-search-lightweight
+          - threat-intelligence/similarity-searchy9w
+      - logging
+      - backend-serverncx

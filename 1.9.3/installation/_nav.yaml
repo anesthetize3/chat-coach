@@ -1,0 +1,11 @@
+items:
+  - installation-introduction
+  - technical-requirements
+  - page: quick-installation
+    items:
+      - quick-installation/installation-with-proxy
+      - quick-installation/notes-for-air-gapped-environments
+  - quick-upgrade
+  - license-activation
+  - ocm-registration
+  - network-setup

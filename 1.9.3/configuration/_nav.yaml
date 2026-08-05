@@ -1,0 +1,63 @@
+items:
+  - category: 'Architectural Overview'
+    items:
+      - sinlge-server-deployment
+      - multi-server-deployment
+      - high-throughput-configuration
+  - category: File/Folder
+    items:
+      - file-size-limit-configuration
+      - file---folder-structure
+  - category: Features
+    items:
+      - scan-types
+  - category: 'BACKEND CONFIGURATION'
+    items:
+      - local-whitelist
+      - fsio-fuzzy-hash-blacklist
+      - engine-options
+      - whitelist-configuration
+      - nsrl-whitelist-integration
+      - cef-syslog-feedback
+      - transform-exit-codes
+      - email-notifications
+      - scan-files-from-input-sources
+  - category: 'FRONTEND CONFIGURATION'
+    items:
+      - ssl-certificates
+      - s3-bucket-configuration
+      - imap-integration
+      - page: general-settings
+        items:
+          - general-settings/general
+          - general-settings/engine
+          - general-settings/maintenance
+      - page: user-and-authentication-management
+        items:
+          - user-and-authentication-management/authentication
+          - user-and-authentication-management/terms-of-use
+          - user-and-authentication-management/third-party
+      - page: data-management
+        items:
+          - data-management/database
+          - data-management/storage
+          - data-management/retention-policy-configuration
+          - data-management/s3-report-storage
+      - page: communication-and-integration
+        items:
+          - communication-and-integration/providers
+          - communication-and-integration/reputation
+          - communication-and-integration/email
+          - communication-and-integration/chat-gpt
+          - communication-and-integration/ocm
+          - communication-and-integration/misp
+      - page: functionality-extensions
+        items:
+          - functionality-extensions/similarity-search
+          - functionality-extensions/search
+          - functionality-extensions/extra-button
+      - page: monitoring-and-logging
+        items:
+          - monitoring-and-logging/jobs
+          - monitoring-and-logging/healthcheck
+          - monitoring-and-logging/audit-logger
