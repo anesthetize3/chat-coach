@@ -1,0 +1,15 @@
+name: 1.9.1
+published: true
+documentations:
+    - installation
+    - configuration
+    - operationalguide
+    - datasheet
+    - integrations
+    - backend
+    - faq
+    - release-notes
+    - troubleshooting
+references:
+    - opswat-filescan
+    - asdf
