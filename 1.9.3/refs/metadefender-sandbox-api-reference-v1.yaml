@@ -1,0 +1,3502 @@
+openapi: 3.0.2
+info:
+    title: MetaDefender Sandbox API Reference v1
+    version: '1.0'
+    description: >
+        ## Developer Guide
+
+        This is the API documentation for MetaDefender Sandbox. If you would like to evaluate or have any
+        questions about this documentation, please contact us via our [Contact
+        Us](https://www.opswat.com/contact) form.
+paths:
+    /api/reports/search:
+        get:
+            tags:
+                - reports
+            parameters:
+                -
+                    name: age
+                    description: Search reports with age of "age" days
+                    schema:
+                        title: Age
+                        description: Search reports with age of "age" days
+                        default: -1
+                        type: integer
+                    in: query
+                    required: false
+                -
+                    name: page
+                    description: Page number starting from 1
+                    schema:
+                        title: Page
+                        description: Page number starting from 1
+                        default: 1
+                        type: integer
+                    in: query
+                    required: false
+                -
+                    name: page_size
+                    description: Page size
+                    schema:
+                        description: Page size
+                        default: 10
+                        allOf:
+                            -
+                                $ref: '#/components/schemas/REPORTS_SEARCH_PAGE_SIZE_OPTIONS'
+                    in: query
+                    required: false
+                -
+                    name: method
+                    schema:
+                        default: and
+                        allOf:
+                            -
+                                $ref: '#/components/schemas/ReportSearchMethod'
+                    in: query
+                    required: false
+                -
+                    name: query
+                    schema:
+                        title: Query
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: filename
+                    schema:
+                        title: Filename
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: source_type
+                    schema:
+                        $ref: '#/components/schemas/ReportsSourceType'
+                    in: query
+                    required: false
+                -
+                    name: filetype
+                    schema:
+                        $ref: '#/components/schemas/FileType'
+                    in: query
+                    required: false
+                -
+                    name: media_type
+                    schema:
+                        title: Media Type
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: verdict
+                    schema:
+                        $ref: '#/components/schemas/Verdict'
+                    in: query
+                    required: false
+                -
+                    name: tag
+                    schema:
+                        title: Tag
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: tags
+                    schema:
+                        title: Tags
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: date_from
+                    schema:
+                        format: date
+                        title: Date From
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: date_to
+                    schema:
+                        format: date
+                        title: Date To
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: rate_from
+                    schema:
+                        title: Rate From
+                        type: integer
+                    in: query
+                    required: false
+                -
+                    name: rate_to
+                    schema:
+                        title: Rate To
+                        type: integer
+                    in: query
+                    required: false
+                -
+                    name: domain
+                    schema:
+                        title: Domain
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: ip
+                    schema:
+                        title: Ip
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: url
+                    schema:
+                        title: Url
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: uuid
+                    schema:
+                        title: Uuid
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: email
+                    schema:
+                        title: Email
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: registry_path
+                    schema:
+                        title: Registry Path
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: revision_save_id
+                    schema:
+                        title: Revision Save Id
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: sha1
+                    schema:
+                        title: Sha1
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: sha256
+                    schema:
+                        title: Sha256
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: sha512
+                    schema:
+                        title: Sha512
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: md5
+                    schema:
+                        title: Md5
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: imphash
+                    schema:
+                        title: Imphash
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: ssdeep
+                    schema:
+                        title: Ssdeep
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: fuzzyfsiohash
+                    schema:
+                        title: Fuzzyfsiohash
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: authentihash
+                    schema:
+                        title: Authentihash
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: yara_rule
+                    schema:
+                        title: Yara Rule
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: retry_count
+                    schema:
+                        title: Retry Count
+                        type: integer
+                    in: query
+                    required: false
+                -
+                    name: scan_init_id
+                    schema:
+                        title: Scan Init Id
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: report_id
+                    schema:
+                        title: Report Id
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: signal_groups
+                    schema:
+                        title: Signal Groups
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: mitre_techniques
+                    schema:
+                        title: Mitre Techniques
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: verdict_groups
+                    schema:
+                        title: Verdict Groups
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: main_task_state
+                    schema:
+                        default: success
+                        allOf:
+                            -
+                                $ref: '#/components/schemas/MainTaskSimplifiedState'
+                    in: query
+                    required: false
+                -
+                    name: exclude
+                    schema:
+                        title: Exclude
+                        type: string
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ReportSearchResponse'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: search_report_api_reports_search_get
+            summary: Search Report
+            description: |-
+                Search for reports.
+
+                Finds reports and uploaded files by various tokens, like hash, filename, verdict, IOCs etc.
+
+                If `query` param is used, other params are ignored.
+    /api/backend/reputation:
+        get:
+            tags:
+                - backend
+            parameters:
+                -
+                    name: sha256
+                    description: SHA256 digest as found in the response of submit or extracted resource in the report.
+                    schema:
+                        title: SHA256 digest
+                        description: >-
+                            SHA256 digest as found in the response of submit or extracted resource in the
+                            report.
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: hashes
+                    description: Array of one or more hashes
+                    schema:
+                        title: Hashes
+                        description: Array of one or more hashes
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_reputation_api_backend_reputation_get
+            summary: Get Reputation
+            description: Wrapper for reputation api
+    /api/docs:
+        get:
+            tags:
+                - docs
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_api_docs_api_docs_get
+            summary: Get API Docs
+            description: Return API docs UI
+    /api/docs/sitemap:
+        get:
+            tags:
+                - docs
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_sitemap_api_docs_sitemap_get
+            summary: Get Sitemap
+            description: Get sitemap xml
+    /api/docs/styles:
+        get:
+            tags:
+                - docs
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_api_docs_styles_api_docs_styles_get
+            summary: Get API Doc Styles
+            description: Return styles for api docs
+    /api/feed/info:
+        get:
+            tags:
+                - feed
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_feed_info_api_feed_info_get
+            summary: Get Feed Info
+            description: Get reports feed info
+    '/api/files/{hash}':
+        get:
+            tags:
+                - files
+            parameters:
+                -
+                    name: hash
+                    description: File hash
+                    schema:
+                        title: Hash
+                        description: File hash
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: report_id
+                    description: Report Id
+                    schema:
+                        title: Report Id
+                        description: Report Id
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: type
+                    schema:
+                        default: base64
+                        allOf:
+                            -
+                                $ref: '#/components/schemas/ContentType'
+                    in: query
+                    required: false
+                -
+                    name: original_name
+                    schema:
+                        title: Original Name
+                        default: false
+                        type: boolean
+                    in: query
+                    required: false
+                -
+                    name: password
+                    description: Password to be used on compression
+                    schema:
+                        title: Zipped content of file
+                        description: Password to be used on compression
+                        type: string
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Item not found
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_single_file_api_files__hash__get
+            summary: Get Single File
+            description: Obtain single file for given report by file id or hash
+    /openapi.json:
+        get:
+            tags:
+                - docs
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_open_api_endpoint_openapi_json_get
+            summary: Get OpenAPI Endpoint
+            description: Return API json data to be used by docs UI
+    /api/users/uploads:
+        get:
+            tags:
+                - users
+            parameters:
+                -
+                    name: page
+                    description: Page number starting from 1
+                    schema:
+                        title: Page
+                        description: Page number starting from 1
+                        default: 1
+                        type: integer
+                    in: query
+                    required: false
+                -
+                    name: page_size
+                    description: Page size
+                    schema:
+                        description: Page size
+                        default: 10
+                        allOf:
+                            -
+                                $ref: '#/components/schemas/REPORTS_SEARCH_PAGE_SIZE_OPTIONS'
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_uploads_api_users_uploads_get
+            summary: Get Uploads
+            description: Get list of uploaded files
+    /api/users/most-interesting:
+        get:
+            tags:
+                - reports
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_most_interesting_api_users_most_interesting_get
+            summary: Get Most Interesting
+            description: Get most interesting report recently
+    /api/users/get-frequent-tags:
+        get:
+            tags:
+                - reports
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_frequent_tags_api_users_get_frequent_tags_get
+            summary: Get Frequent Tags
+            description: Get most frequently seen tags recently
+    '/api/users/{account_id}/avatar':
+        get:
+            tags:
+                - users
+            parameters:
+                -
+                    name: account_id
+                    schema:
+                        title: Account Id
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_avatar_image_api_users__account_id__avatar_get
+            summary: Get Avatar Image
+            description: Get use avatar image
+    '/api/system/translations/{lang}':
+        get:
+            tags:
+                - system
+            parameters:
+                -
+                    name: lang
+                    schema:
+                        $ref: '#/components/schemas/Language'
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_translations_api_system_translations__lang__get
+            summary: Get Translations
+            description: Obtain translations for specific language
+    /api/system/mitre:
+        get:
+            tags:
+                - system
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_mitre_data_api_system_mitre_get
+            summary: Get Mitre Data
+            description: Obtain MITRE tactics and techniques
+    /api/system/info:
+        get:
+            tags:
+                - system
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_default_api_system_info_get
+            summary: Get Default
+            description: 'Return general information about webservice, just to indicate that API is working'
+    '/api/system/get-terms/{terms_type}':
+        get:
+            tags:
+                - system
+            parameters:
+                -
+                    name: terms_type
+                    schema:
+                        $ref: '#/components/schemas/TermsType'
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_terms_api_system_get_terms__terms_type__get
+            summary: Get Terms
+            description: Obtain privacy policy and terms & conditions
+    /api/system/errors/log:
+        post:
+            tags:
+                - system
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: log_client_error_api_system_errors_log_post
+            summary: Log Client Error
+            description: 'Perform needed actions with error data, obtained from front-end'
+    /api/system/config:
+        get:
+            tags:
+                - system
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_config_api_system_config_get
+            summary: Get Config
+            description: Obtain project configuration to use on front-end
+    /api/scan/url:
+        post:
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            $ref: '#/components/schemas/Body_scan_file_api_scan_url_post'
+            tags:
+                - scan
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponsePostURL'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: scan_file_api_scan_url_post
+            summary: Scan URL
+            description: Scan URL resource
+    /api/scan/file:
+        post:
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: '#/components/schemas/Body_scan_file_api_scan_file_post'
+            tags:
+                - scan
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponsePostFile'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: scan_file_api_scan_file_post
+            summary: Scan File
+            description: >-
+                Perform a scan of the uploaded file. After you submit a file for scanning you'll get the
+                <b>flow_id</b> which is required to poll the result.
+    '/api/scan/{flow_id}/report':
+        get:
+            tags:
+                - scan
+            parameters:
+                -
+                    name: flow_id
+                    description: flow_id from scan-file or scan-url
+                    schema:
+                        title: Flow Id
+                        description: Flow Id from scan-file
+                        type: string
+                    in: path
+                    required: true
+                -
+                    examples:
+                        basic:
+                            summary: basic example
+                            description: >-
+                                Fetch only general report data: file name, hash, type of file, report creation
+                                date and error status in case there was an error
+                            value:
+                                - general
+                        signal_groups:
+                            summary: all signal groups
+                            description: Fetch all signal groups
+                            value:
+                                - allSignalGroups
+                        tags:
+                            summary: all tags
+                            description: Fetch all tags
+                            value:
+                                - allTags
+                        task_reference:
+                            summary: status of main task
+                            description: Fetch status of the main scan task
+                            value:
+                                - taskReference
+                        subtask_references:
+                            summary: status of subtasks
+                            description: Fetch status of scan subtasks
+                            value:
+                                - subtaskReferences
+                        final_verdict:
+                            summary: final verdict
+                            description: Final verdict and confidence
+                            value:
+                                - finalVerdict
+                        simple_fields:
+                            summary: other simple fields
+                            description: Various simple fields of the report
+                            value:
+                                - opcount
+                                - positionInQueue
+                                - priority
+                                - expectedRemainingProcessingTimeInSeconds
+                                - processTime
+                        main_task_data:
+                            summary: main task result
+                            description: All data produced by `file` scan task (it's the main scan task)
+                            value:
+                                - 'f:all'
+                        file_download:
+                            summary: downloaded files
+                            description: All data produced by `file-download` scan subtask
+                            value:
+                                - 'fd:all'
+                        domain_resolve:
+                            summary: domain resolve result
+                            description: All data produced by `domain-resolve` scan subtask
+                            value:
+                                - 'dr:all'
+                        visualization:
+                            summary: visualization result
+                            description: Visualization image produced by `visualization` scan subtask
+                            value:
+                                - 'v:visualizedSample.compressedBase64'
+                        file_preview:
+                            summary: file preview images
+                            description: File preview images produced by `visualization` scan subtask
+                            value:
+                                - 'v:renderedImages'
+                        whois_lookup:
+                            summary: whois lookup result
+                            description: All data produced by `whois-lookup` scan subtask
+                            value:
+                                - 'wi:all'
+                        osint:
+                            summary: osint result
+                            description: All data produced by `osint` scan subtasks
+                            value:
+                                - 'o:all'
+                        task_subfields:
+                            summary: particular information
+                            description: Get some specific fields from task data (on example of main task data)
+                            value:
+                                - 'f:yaraMatches'
+                                - 'f:extractedFiles'
+                                - 'f:digests'
+                        combination:
+                            summary: various combination
+                            description: Get specific fields of multiple scan tasks
+                            value:
+                                - 'f:all'
+                                - 'fd:fileDownloadResults'
+                                - 'fd:extractedUrls'
+                                - 'o:all'
+                        nested_selections:
+                            summary: various combination of nested selections
+                            description: More selective information of any depth
+                            value:
+                                - general
+                                - subtaskReferences.state
+                                - 'f:yaraMatches'
+                                - 'f:extractedFiles.yaraMatches'
+                                - 'f:extractedDomains.origin.type'
+                                - 'o:results'
+                    name: filter
+                    description: >-
+                        Report fields that should be fetched. This parameter can have pretty complex setup.
+                        Its mostly covered in examples, but if you still have some questions, please contact
+                        support.
+                    schema:
+                        title: Report filter
+                        description: >-
+                            Report fields that should be fetched. This parameter can have pretty complex
+                            setup. Its mostly covered in examples, but if you still have some questions,
+                            please contact support.
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: false
+                -
+                    example:
+                        - 'allSignalGroups(description:asc,averageSignalStrength:desc)'
+                        - 'allTags(tag.name:asc)'
+                    name: sorting
+                    description: Sort parameters to be applied to fetched report data
+                    schema:
+                        title: Filter sorting options
+                        description: Sort parameters to be applied to fetched report data
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: false
+                -
+                    example:
+                        - emulationGraph
+                    name: other
+                    description: Extra options to get special data
+                    schema:
+                        title: Special options
+                        description: Extra options to get special data
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                oneOf:
+                                    -
+                                        $ref: '#/components/schemas/SuccessfulResponseGetScanReportDefault'
+                                    -
+                                        $ref: '#/components/schemas/SuccessfulResponseGetScanReportFiltered'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Item not found
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_all_upload_related_reports_api_scan__flow_id__report_get
+            summary: Get All Upload Related Reports
+            description: >-
+                Obtain all reports for given scan init. By default, if no `filter` parameter is sent, we only
+                return some basic report data, just to see report is there
+    '/api/reports/{report_id}/files':
+        get:
+            tags:
+                - reports
+            parameters:
+                -
+                    name: report_id
+                    schema:
+                        title: Report Id
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: type
+                    schema:
+                        default: all
+                        allOf:
+                            -
+                                $ref: '#/components/schemas/ReportFileType'
+                    in: query
+                    required: false
+                -
+                    name: with_content
+                    description: Compressed base64 data
+                    schema:
+                        title: Content of files
+                        description: Compressed base64 data
+                        default: false
+                        type: boolean
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Item not found
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_all_files_api_reports__report_id__files_get
+            summary: Get All Files
+            description: Obtain all files for given report
+    '/api/reports/{report_id}/{file_hash}':
+        get:
+            tags:
+                - reports
+            parameters:
+                -
+                    name: report_id
+                    description: Report Id
+                    schema:
+                        title: Report Id
+                        description: Report Id
+                        type: string
+                    in: path
+                    required: true
+                -
+                    name: file_hash
+                    description: File hash
+                    schema:
+                        title: File Hash
+                        description: File hash
+                        type: string
+                    in: path
+                    required: true
+                -
+                    example:
+                        basic:
+                            summary: basic example
+                            description: >-
+                                Fetch only general report data: file name, hash, type of file, report creation
+                                date and error status in case there was an error
+                            value:
+                                - general
+                        signal_groups:
+                            summary: all signal groups
+                            description: Fetch all signal groups
+                            value:
+                                - allSignalGroups
+                        tags:
+                            summary: all tags
+                            description: Fetch all tags
+                            value:
+                                - allTags
+                        task_reference:
+                            summary: status of main task
+                            description: Fetch status of the main scan task
+                            value:
+                                - taskReference
+                        subtask_references:
+                            summary: status of subtasks
+                            description: Fetch status of scan subtasks
+                            value:
+                                - subtaskReferences
+                        final_verdict:
+                            summary: final verdict
+                            description: Final verdict and confidence
+                            value:
+                                - finalVerdict
+                        simple_fields:
+                            summary: other simple fields
+                            description: Various simple fields of the report
+                            value:
+                                - opcount
+                                - positionInQueue
+                                - priority
+                                - expectedRemainingProcessingTimeInSeconds
+                                - processTime
+                        main_task_data:
+                            summary: main task result
+                            description: All data produced by `file` scan task (it's the main scan task)
+                            value:
+                                - 'f:all'
+                        file_download:
+                            summary: downloaded files
+                            description: All data produced by `file-download` scan subtask
+                            value:
+                                - 'fd:all'
+                        domain_resolve:
+                            summary: domain resolve result
+                            description: All data produced by `domain-resolve` scan subtask
+                            value:
+                                - 'dr:all'
+                        visualization:
+                            summary: visualization result
+                            description: Visualization image produced by `visualization` scan subtask
+                            value:
+                                - 'v:visualizedSample.compressedBase64'
+                        file_preview:
+                            summary: file preview images
+                            description: File preview images produced by `visualization` scan subtask
+                            value:
+                                - 'v:renderedImages'
+                        whois_lookup:
+                            summary: whois lookup result
+                            description: All data produced by `whois-lookup` scan subtask
+                            value:
+                                - 'wi:all'
+                        osint:
+                            summary: osint result
+                            description: All data produced by `osint` scan subtasks
+                            value:
+                                - 'o:all'
+                        task_subfields:
+                            summary: particular information
+                            description: Get some specific fields from task data (on example of main task data)
+                            value:
+                                - 'f:yaraMatches'
+                                - 'f:extractedFiles'
+                                - 'f:digests'
+                        combination:
+                            summary: various combination
+                            description: Get specific fields of multiple scan tasks
+                            value:
+                                - 'f:all'
+                                - 'fd:fileDownloadResults'
+                                - 'fd:extractedUrls'
+                                - 'o:all'
+                        nested_selections:
+                            summary: various combination of nested selections
+                            description: More selective information of any depth
+                            value:
+                                - general
+                                - subtaskReferences.state
+                                - 'f:yaraMatches'
+                                - 'f:extractedFiles.yaraMatches'
+                                - 'f:extractedDomains.origin.type'
+                                - 'o:results'
+                    name: filter
+                    description: Report fields that should be fetched
+                    schema:
+                        title: Report filter
+                        description: Report fields that should be fetched
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: false
+                -
+                    example:
+                        - 'allSignalGroups(description:asc,averageSignalStrength:desc)'
+                        - 'allTags(tag.name:asc)'
+                    name: sorting
+                    description: Sort parameters to be applied to fetched report data
+                    schema:
+                        title: Filter sorting options
+                        description: Sort parameters to be applied to fetched report data
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: false
+                -
+                    example:
+                        - emulationGraph
+                    name: other
+                    description: Extra options to get special data
+                    schema:
+                        title: Special options
+                        description: Extra options to get special data
+                        type: array
+                        items:
+                            type: string
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Item not found
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_specific_report_api_reports__report_id___file_hash__get
+            summary: Get Specific Report
+            description: Obtain a report for given report_id.
+    /api/feed/atom:
+        get:
+            tags:
+                - feed
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+            security:
+                -
+                    apiKey: []
+            operationId: get_feed_api_feed_atom_get
+            summary: Get Feed
+            description: >-
+                Get reports feed.
+
+
+                For API documentation page we show smaller amount of reports. To get full feed, query feed
+                endpoint directly from browser address bar or from any suitable app.
+    /api/system/logo:
+        get:
+            tags:
+                - system
+            parameters:
+                -
+                    name: type
+                    schema:
+                        title: Type
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: theme
+                    schema:
+                        title: Theme
+                        type: string
+                    in: query
+                    required: false
+                -
+                    name: name
+                    schema:
+                        title: Name
+                        type: string
+                    in: query
+                    required: false
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessfulResponse'
+                    description: Successful Response
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+            operationId: get_logo_api_system_logo_get
+            summary: Get Logo
+            description: Obtain MITRE tactics and techniques
+    /api/reputation/hash:
+        get:
+            tags:
+                - reputation
+            parameters:
+                -
+                    name: sha256
+                    schema:
+                        title: Sha256
+                        type: string
+                    in: query
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ReputationResultHash'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '415':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Unsupported media type
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+                - {}
+            operationId: get_reputation_hash_api_reputation_hash_get
+            summary: Get Reputation Hash
+            description: Get the reputation for one given hash
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            title: Payload
+                            type: array
+                            items:
+                                type: string
+                required: true
+            tags:
+                - reputation
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                title: Response Get Reputation Hash Bulk Api Reputation Hash Post
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ReputationResultHash'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '415':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Unsupported media type
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+                - {}
+            operationId: get_reputation_hash_bulk_api_reputation_hash_post
+            summary: Get Reputation Hash Bulk
+            description: Get the reputation for more hashes
+    '/api/reputation/{ioc_type}':
+        get:
+            tags:
+                - reputation
+            parameters:
+                -
+                    name: ioc_type
+                    schema:
+                        $ref: '#/components/schemas/ReputationIocType'
+                    in: path
+                    required: true
+                -
+                    name: ioc_value
+                    schema:
+                        title: Ioc Value
+                        type: string
+                    in: query
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ReputationResultIoc'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '415':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Unsupported media type
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+                - {}
+            operationId: get_reputation_ioc_api_reputation__ioc_type__get
+            summary: Get Reputation Ioc
+            description: Get the reputation for one given IOC
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            title: Payload
+                            type: array
+                            items:
+                                type: string
+                required: true
+            tags:
+                - reputation
+            parameters:
+                -
+                    name: ioc_type
+                    schema:
+                        $ref: '#/components/schemas/ReputationIocType'
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                title: Response Get Reputation Ioc Bulk Api Reputation  Ioc Type  Post
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ReputationResultIoc'
+                    description: Successful Response
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Bad request
+                '415':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorMessageModel'
+                    description: Unsupported media type
+                '422':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HTTPValidationError'
+                    description: Validation Error
+            security:
+                -
+                    apiKey: []
+                - {}
+            operationId: get_reputation_ioc_bulk_api_reputation__ioc_type__post
+            summary: Get Reputation Ioc Bulk
+            description: Get the reputation for more IOCs
+components:
+    schemas:
+        SuccessfulResponse:
+            title: Successful Response
+            type: object
+            example:
+                key: value
+        SuccessfulResponsePostFile:
+            title: File Upload Was Successful
+            type: object
+            properties:
+                flow_id:
+                    type: string
+                priority:
+                    type: object
+                    properties:
+                        applied:
+                            type: integer
+                        max_possible:
+                            type: integer
+                        note:
+                            type: string
+            example:
+                flow_id: 0123456789abcdefghijklmn
+                priority:
+                    applied: 20
+                    max_possible: 100
+                    note: >-
+                        In order to receive max possible scan priority, please ensure the last scan request is
+                        older than 60 seconds, and do not perform more than 60 scan requests per hour.
+        SuccessfulResponsePostURL:
+            title: URL Upload Was Successful
+            type: object
+            properties:
+                flow_id:
+                    type: string
+                priority:
+                    type: object
+                    properties:
+                        applied:
+                            type: integer
+                        max_possible:
+                            type: integer
+            example:
+                flow_id: 0123456789abcdefghijklmn
+                priority:
+                    applied: 20
+                    max_possible: 100
+        SuccessfulResponseGetScanReportDefault:
+            title: Get Scan Report - without filters
+            type: object
+            properties:
+                flowId:
+                    type: string
+                allFinished:
+                    type: boolean
+                allFilesDownloadFinished:
+                    type: boolean
+                reportsAmount:
+                    type: number
+                priority:
+                    type: string
+                pollPause:
+                    type: number
+                fileSize:
+                    type: number
+                fileReadProgressBytes:
+                    type: number
+                reports:
+                    type: object
+                    properties:
+                        additionalProperties:
+                            type: object
+                            properties:
+                                finalVerdict:
+                                    $ref: '#/components/schemas/FinalVerdict'
+                                overallState:
+                                    $ref: '#/components/schemas/OverallState'
+                                positionInQueue:
+                                    description: >
+                                        Every scan request is put into queues with different priority and it
+                                        shows the position in the given queue
+                                    type: number
+                                vtRate:
+                                    description: >
+                                        If a sufficient amount of OSINT information is available, vtRrate
+                                        gives the proportion of positive hits. If no such information is
+                                        available, the value is -1.
+                                    type: number
+                                file:
+                                    description: |
+                                        Data related to the submitted file
+                                    type: object
+                                    properties:
+                                        name:
+                                            description: |
+                                                Name of submitted file
+                                            type: string
+                                        hash:
+                                            description: |
+                                                Hash of submitted file
+                                            type: string
+                                        type:
+                                            description: |
+                                                Type of submitted file
+                                            type: string
+                                filesDownloadFinished:
+                                    description: |
+                                        The file has been downloaded for processing
+                                    type: boolean
+                                created_date:
+                                    format: date-time
+                                    description: |
+                                        Date when scan was submitted
+                                    type: string
+                                estimatedTime:
+                                    description: |
+                                        Time in seconds to be finished
+                                    type: number
+                                estimated_progress:
+                                    format: float
+                                    description: |
+                                        Progress of scan
+                                    maximum: 1
+                                    minimum: 0
+                                    type: number
+            example:
+                flowId: 63f6209b01b99ad33e80b936
+                allFinished: true
+                allFilesDownloadFinished: true
+                reportsAmount: 1
+                priority: least
+                pollPause: 12
+                fileSize: 13370880
+                fileReadProgressBytes: 13370880
+                reports:
+                    08bae608-ed5f-4ce6-8ae9-fad6b4609193:
+                        overallState: success_partial
+                        positionInQueue: 0
+                        finalVerdict:
+                            verdict: MALICIOUS
+                            threatLevel: 1
+                            confidence: 1
+                        vtRate: -1
+                        file:
+                            name: bad_file.exe
+                            hash: 834d1dbfab8330ea5f1844f6e905ed0ac19d1033ee9a9f1122ad2051c56783dc
+                            type: pe
+                        filesDownloadFinished: true
+                        created_date: '02/22/2023, 14:03:11'
+                        estimatedTime: '2'
+                        estimated_progress: 1
+        SuccessfulResponseGetScanReportFiltered:
+            title: Get Scan Report - with filters
+            type: object
+            properties:
+                reports:
+                    type: object
+                    properties:
+                        additionalProperties:
+                            type: object
+                            properties:
+                                overallState:
+                                    $ref: '#/components/schemas/OverallState'
+                                <filtername>:
+                                    type: object
+                            additionalProperties: true
+            example:
+                reports:
+                    08bae608-ed5f-4ce6-8ae9-fad6b4609193:
+                        overallState: success_partial
+                        taskReference:
+                            name: transform-file
+                            additionalInfo:
+                                submitName: bad_file.exe
+                                submitTime: 1677074591344
+                                digests:
+                                    SHA-256: 834d1dbfab8330ea5f1844f6e905ed0ac19d1033ee9a9f1122ad2051c56783dc
+                            ID: 978a1611-61e6-4ee0-84df-40d2003c81aa
+                            state: SUCCESS
+                            resourceReference:
+                                type: TRANSFORM_FILE
+                                name: file
+                                ID: f36892f5-61a2-49ff-8a22-89b95c73a03f
+                            opcount: 1
+                            processTime: 7802
+        FinalVerdict:
+            title: Final Verdict
+            type: object
+            properties:
+                verdict:
+                    $ref: '#/components/schemas/ReportVerdict'
+                threatLevel:
+                    format: float
+                    maximum: 1
+                    minimum: -1
+                    type: number
+                confidence:
+                    format: float
+                    maximum: 1
+                    minimum: 0
+                    type: number
+        OverallState:
+            title: Overall State
+            description: >
+                Describes general state of report:
+
+                - in_queue: file scan is not started yet, file is in scan queue
+
+                - in_progress: scan have started, no result verdict yet
+
+                - success: the scan is finished
+
+                - success_partial: means that some sub-task(s) had state `success_partial`, in case, ex., some
+                it's lookups didn't complete in time
+
+                - failed: the scan is failed
+
+                - failed_partial: some sub-task(s) failed to execute
+            enum:
+                - in_queue
+                - in_progress
+                - success
+                - success_partial
+                - failed
+                - failed_partial
+            type: string
+        AdminAppErrorNotePayload:
+            title: AdminAppErrorNotePayload
+            required:
+                - note
+            type: object
+            properties:
+                note:
+                    title: Note
+                    type: string
+        AdminAppErrorResponse:
+            title: AdminAppErrorResponse
+            required:
+                - id
+                - type
+                - message
+                - is_signed_in
+            type: object
+            properties:
+                id:
+                    title: Id
+                    type: string
+                type:
+                    title: Error type
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/AppErrorType'
+                message:
+                    title: Exception message
+                    type: string
+                url:
+                    title: 'Page url, where error happened'
+                    type: string
+                trace:
+                    title: Exception stack trace
+                    type: string
+                last_occurance_date:
+                    format: date-time
+                    title: Date of last occurance
+                    type: string
+                occurance_count:
+                    title: Occurance Count
+                    description: How often error was noticed
+                    default: 1
+                    type: integer
+                is_signed_in:
+                    title: Is Signed In
+                    description: If user was signed in during error
+                    type: boolean
+                report_flow_id:
+                    title: Id of file upload
+                    type: string
+                report_id:
+                    title: Report id
+                    type: string
+                note:
+                    title: Note about error
+                    type: string
+        AdminAppErrorsRemovedResponse:
+            title: AdminAppErrorsRemovedResponse
+            required:
+                - removed_count
+            type: object
+            properties:
+                removed_count:
+                    title: Removed Count
+                    type: integer
+        AdminAppErrorsResponse:
+            title: AdminAppErrorsResponse
+            description: Customize admin response models
+            required:
+                - items
+                - total_count
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminAppErrorResponse'
+                total_count:
+                    title: Total Count
+                    type: integer
+                matched_count:
+                    title: Matched Count
+                    type: integer
+        AdminGenericLogNotePayload:
+            title: AdminGenericLogNotePayload
+            required:
+                - note
+            type: object
+            properties:
+                note:
+                    title: Note
+                    type: string
+        AdminGenericLogResponse:
+            title: AdminGenericLogResponse
+            required:
+                - id
+                - key
+                - key_type
+            type: object
+            properties:
+                id:
+                    title: Id
+                    type: string
+                key:
+                    title: Some key of logging record to easily search it by
+                    type: string
+                key_type:
+                    description: User friendly note on logging record key
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/LoggingRecordKeyType'
+                data:
+                    title: Data
+                    description: Logging data itself
+                note:
+                    title: Note
+                    description: Note describing log specifics
+                    type: string
+                related_url:
+                    title: Related Url
+                    description: 'Related site page, if it exists'
+                    type: string
+                saved_date:
+                    format: date-time
+                    title: Saved Date
+                    description: Date when logging record was created
+                    type: string
+        AdminGenericLogsRemovedResponse:
+            title: AdminGenericLogsRemovedResponse
+            required:
+                - removed_count
+            type: object
+            properties:
+                removed_count:
+                    title: Removed Count
+                    type: integer
+        AdminGenericLogsResponse:
+            title: AdminGenericLogsResponse
+            description: Customize admin response models
+            required:
+                - items
+                - total_count
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminGenericLogResponse'
+                total_count:
+                    title: Total Count
+                    type: integer
+                matched_count:
+                    title: Matched Count
+                    type: integer
+        AdminGroupResponse:
+            title: AdminGroupResponse
+            required:
+                - id
+                - name
+                - default
+            type: object
+            properties:
+                id:
+                    title: Group ID
+                    type: string
+                name:
+                    title: Group name
+                    maxLength: 100
+                    type: string
+                description:
+                    title: Group description
+                    maxLength: 300
+                    type: string
+                default:
+                    title: Default
+                    description: If group is provided by app by default
+                    type: boolean
+        AdminLoginPasswordCredentialsResponse:
+            title: AdminLoginPasswordCredentialsResponse
+            required:
+                - login
+            type: object
+            properties:
+                login:
+                    title: Login
+                    type: string
+        AdminScanSourceConfigResponse:
+            title: AdminScanSourceConfigResponse
+            required:
+                - id
+                - provider
+                - name
+                - source_type
+                - host
+                - credentials
+                - is_active
+                - files_are_private
+                - propagate_tags
+                - schedule
+            type: object
+            properties:
+                id:
+                    title: Id
+                    type: string
+                provider:
+                    title: Service provider name
+                    type: string
+                name:
+                    title: Source name
+                    type: string
+                source_type:
+                    title: Source type
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ScanSourceType'
+                host:
+                    title: Host to connect to
+                    type: string
+                port:
+                    title: Port to connect to
+                    type: string
+                connection_security:
+                    title: Connection security type
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ScanSourceConnectionSecurity'
+                folders:
+                    title: Folders to download
+                    type: array
+                    items:
+                        type: string
+                remove_files_on_source:
+                    title: Remove Files On Source
+                    description: If we should remove files on source after scanning
+                    default: false
+                    type: boolean
+                credentials:
+                    anyOf:
+                        -
+                            $ref: '#/components/schemas/AdminLoginPasswordCredentialsResponse'
+                        -
+                            $ref: '#/components/schemas/S3Credentials.__pydantic_model__'
+                    title: Connect credentials
+                    description: Can have various fields depending on scan source
+                is_active:
+                    title: Is Active
+                    description: If config is activated for usage
+                    type: boolean
+                source_type_specific:
+                    title: Source Type Specific
+                    description: Source type specific options
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/EmailSourceOptions.__pydantic_model__'
+                files_are_private:
+                    title: Files Are Private
+                    description: If all downloaded files should be scanned as private
+                    type: boolean
+                description:
+                    title: Description
+                    description: Description field that should be added to all downloaded files
+                    type: string
+                propagate_tags:
+                    title: Propagate Tags
+                    description: If tags should be extracted from description and added to reports
+                    type: boolean
+                schedule:
+                    title: Schedule
+                    description: Schedule to run scan source handlers
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ScheduleTaskConfigResponse'
+        AdminScanSourceFileConfigResponse:
+            title: AdminScanSourceFileConfigResponse
+            required:
+                - id
+                - provider
+                - name
+                - source_type
+            type: object
+            properties:
+                id:
+                    title: Id
+                    type: string
+                provider:
+                    title: Provider
+                    type: string
+                name:
+                    title: Name
+                    type: string
+                source_type:
+                    $ref: '#/components/schemas/ScanSourceType'
+        AdminScanSourceFileDataResponse:
+            title: AdminScanSourceFileDataResponse
+            required:
+                - name
+                - hash
+                - mime_type
+            type: object
+            properties:
+                name:
+                    title: Name
+                    type: string
+                hash:
+                    title: Hash
+                    type: string
+                mime_type:
+                    title: Mime Type
+                    type: string
+        AdminScanSourceFileResponse:
+            title: AdminScanSourceFileResponse
+            description: Customize admin response models
+            required:
+                - config
+                - state
+                - folder
+                - id_on_source
+                - created_date
+            type: object
+            properties:
+                config:
+                    title: Summary of config of scan source
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/AdminScanSourceFileConfigResponse'
+                file:
+                    title: File
+                    description: Some file data
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/AdminScanSourceFileDataResponse'
+                state:
+                    title: File processing state
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ScanSourceFileState'
+                verdict:
+                    title: Related report verdict
+                    description: Scan service decision about scanned file danger level
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ReportVerdict'
+                folder:
+                    title: Folder
+                    description: Unique path to file on source
+                    type: string
+                id_on_source:
+                    title: Id On Source
+                    description: Unique id of file in its folder on source
+                    type: integer
+                flow_id:
+                    title: Flow Id
+                    description: Id of scan flow record
+                    type: string
+                created_date:
+                    format: date-time
+                    title: Created Date
+                    description: Time of file record creation
+                    type: string
+                created_date_on_source:
+                    format: date-time
+                    title: Created Date On Source
+                    description: Date of file creation on source
+                    type: string
+                    example: '2023-01-03T15:15:57.756998'
+                downloaded_date:
+                    format: date-time
+                    title: Date/time of downloading
+                    type: string
+                    example: '2023-01-03T15:15:57.757036'
+        AdminScanSourceSubjobResponse:
+            title: AdminScanSourceSubjobResponse
+            description: Customize admin response models
+            required:
+                - scan_source_config
+                - config
+                - state
+            type: object
+            properties:
+                scan_source_config:
+                    $ref: '#/components/schemas/AdminScanSourceFileConfigResponse'
+                config:
+                    $ref: '#/components/schemas/ScheduleTaskConfigResponse'
+                state:
+                    $ref: '#/components/schemas/ScheduleTaskStateResponse'
+        AdminScanSourcesConfigsResponse:
+            title: AdminScanSourcesConfigsResponse
+            description: Customize admin response models
+            required:
+                - items
+                - total_count
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminScanSourceConfigResponse'
+                total_count:
+                    title: Total Count
+                    type: integer
+                matched_count:
+                    title: Matched Count
+                    type: integer
+        AdminScanSourcesFilesResponse:
+            title: AdminScanSourcesFilesResponse
+            description: Customize admin response models
+            required:
+                - items
+                - total_count
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminScanSourceFileResponse'
+                total_count:
+                    title: Total Count
+                    type: integer
+                matched_count:
+                    title: Matched Count
+                    type: integer
+        AdminScanSourcesSubjobsResponse:
+            title: AdminScanSourcesSubjobsResponse
+            description: Customize admin response models
+            required:
+                - items
+                - total_count
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminScanSourceSubjobResponse'
+                total_count:
+                    title: Total Count
+                    type: integer
+                matched_count:
+                    title: Matched Count
+                    type: integer
+        AdminSettingOutput:
+            title: AdminSettingOutput
+            required:
+                - id
+                - name
+                - group
+                - subgroup
+                - value
+            type: object
+            properties:
+                id:
+                    title: Id
+                    type: string
+                name:
+                    title: Setting name
+                    type: string
+                group:
+                    title: Settings group name
+                    type: string
+                subgroup:
+                    title: settings subgroup name
+                    type: string
+                value:
+                    anyOf:
+                        -
+                            type: integer
+                        -
+                            type: boolean
+                        -
+                            type: string
+                        -
+                            type: array
+                            items: {}
+                    title: Setting value
+        AdminUserResponse:
+            title: AdminUserResponse
+            required:
+                - id
+                - email
+            type: object
+            properties:
+                id:
+                    title: User ID
+                    type: string
+                account_id:
+                    title: Account ID
+                    description: 'Permanent id to use, say, in urls'
+                    type: string
+                email:
+                    title: Email
+                    type: string
+                username:
+                    title: Nick name
+                    description: User nickname in system
+                    type: string
+                groups:
+                    title: User groups
+                    description: Groups user is a member of
+                    type: array
+                    items:
+                        type: string
+                confirmed:
+                    title: Email confirmed
+                    default: false
+                    type: boolean
+                active:
+                    title: Is user active
+                    default: false
+                    type: boolean
+                created_date:
+                    format: date-time
+                    title: Date of user creation
+                    type: string
+                last_login_date:
+                    format: date-time
+                    title: Last login date
+                    type: string
+                    example: '2023-01-03T15:15:57.758060'
+                count_uploads:
+                    title: Count Uploads
+                    description: Amount of user uploads
+                    default: 0
+                    type: integer
+        AdminUsersResponse:
+            title: AdminUsersResponse
+            description: Customize admin response models
+            required:
+                - items
+                - total_count
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/AdminUserResponse'
+                total_count:
+                    title: Total Count
+                    type: integer
+                matched_count:
+                    title: Matched Count
+                    type: integer
+        AppErrorType:
+            title: AppErrorType
+            description: Type of application error that we can save
+            enum:
+                - server
+                - client
+            type: string
+        AppStatResponse:
+            title: AppStatResponse
+            description: Return stat data to user
+            required:
+                - name
+                - value
+                - updated_date
+            type: object
+            properties:
+                name:
+                    title: Name
+                    type: string
+                value:
+                    anyOf:
+                        -
+                            type: boolean
+                        -
+                            type: string
+                        -
+                            type: integer
+                        -
+                            type: array
+                            items: {}
+                        -
+                            type: object
+                    title: Value
+                updated_date:
+                    format: date-time
+                    title: Updated Date
+                    type: string
+        Body_post_profile_api_users_profile_post:
+            title: Body_post_profile_api_users_profile_post
+            required:
+                - email
+            type: object
+            properties:
+                email:
+                    title: Email
+                    pattern: >-
+                        ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$
+                    type: string
+                username:
+                    title: Username
+                    type: string
+                old_password:
+                    title: Old Password
+                    type: string
+                new_password:
+                    title: New Password
+                    type: string
+                password_confirm:
+                    title: Password Confirm
+                    type: string
+                file:
+                    format: binary
+                    title: File
+                    type: string
+                first_name:
+                    title: First Name
+                    type: string
+                last_name:
+                    title: Last Name
+                    type: string
+                phone:
+                    title: Phone
+                    type: string
+                company:
+                    title: Company
+                    type: string
+                job:
+                    title: Job
+                    type: string
+                role:
+                    title: Role
+                    type: string
+                department:
+                    title: Department
+                    type: string
+                industry:
+                    title: Industry
+                    type: string
+                subscribe:
+                    title: Subscribe
+                    default: true
+                    type: boolean
+                theme:
+                    title: Theme
+                    type: string
+        Body_scan_file_api_scan_file_post:
+            title: Body_scan_file_api_scan_file_post
+            required:
+                - file
+            type: object
+            properties:
+                file:
+                    format: binary
+                    title: File
+                    type: string
+                save_preset:
+                    title: Save Preset
+                    default: false
+                    type: boolean
+                description:
+                    title: Description
+                    description: Uploaded file/url description
+                    type: string
+                tags:
+                    title: Tags
+                    description: Tags array to propagate
+                    type: string
+                propagate_tags:
+                    title: Propagate Tags
+                    description: If tags from description should be added to produced report(s)
+                    default: true
+                    type: boolean
+                password:
+                    title: Password
+                    description: 'Custom password, in case uploaded archive is protected'
+                    type: string
+                is_private:
+                    title: Is Private
+                    description: If file should not be available for download by other users
+                    type: boolean
+                skip_whitelisted:
+                    title: Skip Whitelisted
+                    description: 'If file is detected as whitelisted, report is not created'
+                    type: boolean
+        Body_scan_file_api_scan_url_post:
+            title: Body_scan_file_api_scan_url_post
+            required:
+                - url
+            type: object
+            properties:
+                save_preset:
+                    title: Save Preset
+                    default: false
+                    type: boolean
+                url:
+                    title: Url
+                    description: Url of internet resource to be scanned
+                    type: string
+                description:
+                    title: Description
+                    description: Uploaded file/url description
+                    type: string
+                tags:
+                    title: Tags
+                    description: Tags array to propagate
+                    type: string
+                propagate_tags:
+                    title: Propagate Tags
+                    description: If tags from description should be added to produced report(s)
+                    default: true
+                    type: boolean
+                password:
+                    title: Password
+                    description: 'Custom password, in case uploaded archive is protected'
+                    type: string
+                is_private:
+                    title: Is Private
+                    description: If file should not be available for download by other users
+                    type: boolean
+                skip_whitelisted:
+                    title: Skip Whitelisted
+                    description: 'If file is detected as whitelisted, report is not created'
+                    type: boolean
+        Body_select_logo_api_admin_logos_select_post:
+            title: Body_select_logo_api_admin_logos_select_post
+            required:
+                - type
+                - theme
+            type: object
+            properties:
+                file:
+                    format: binary
+                    title: File
+                    type: string
+                name:
+                    title: Name
+                    type: string
+                type:
+                    $ref: '#/components/schemas/SiteLogoType'
+                theme:
+                    $ref: '#/components/schemas/SiteTheme'
+        ContentType:
+            title: ContentType
+            description: An enumeration.
+            enum:
+                - base64
+                - compressedBase64
+                - raw
+            type: string
+        DailyArchiveType:
+            title: DailyArchiveType
+            description: An enumeration.
+            enum:
+                - doc
+                - exec
+            type: string
+        DailyReportsArchiveResponse:
+            title: DailyReportsArchiveResponse
+            required:
+                - name
+                - link
+                - reports_date
+                - files_count
+                - files_type
+                - size
+                - is_public
+            type: object
+            properties:
+                name:
+                    title: Name
+                    description: Archive file name
+                    type: string
+                link:
+                    title: Link
+                    description: Link to file download
+                    type: string
+                reports_date:
+                    title: Reports Date
+                    description: Date of reports creation
+                    type: string
+                files_count:
+                    title: Files Count
+                    description: Amount of files in archive
+                    type: integer
+                files_type:
+                    description: Generic type of files inside archive
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/DailyArchiveType'
+                size:
+                    title: Size
+                    description: Archive size in bytes
+                    type: integer
+                is_public:
+                    title: Is Public
+                    description: If archive contains only public or only private files
+                    type: boolean
+        DateStatResponse:
+            title: DateStatResponse
+            description: Return date stat data to user
+            required:
+                - date
+                - name
+                - value
+                - updated_date
+            type: object
+            properties:
+                date:
+                    title: Date
+                    type: string
+                name:
+                    title: Name
+                    type: string
+                value:
+                    anyOf:
+                        -
+                            type: boolean
+                        -
+                            type: string
+                        -
+                            type: integer
+                        -
+                            type: array
+                            items: {}
+                        -
+                            type: object
+                    title: Value
+                updated_date:
+                    format: date-time
+                    title: Updated Date
+                    type: string
+        EmailFirstFetchMode:
+            title: EmailFirstFetchMode
+            description: What emails to fetch on first time accessing account
+            enum:
+                - all
+                - recent
+                - unseen
+            type: string
+        EmailSourceOptions.__pydantic_model__:
+            title: EmailSourceOptions
+            description: Options specific to email sources
+            required:
+                - first_fetch_mode
+            type: object
+            properties:
+                mark_as_seen:
+                    title: Mark As Seen
+                    description: If we should mark downloaded emails as seen on email service
+                    default: false
+                    type: boolean
+                append_scanned_flag:
+                    title: Append Scanned Flag
+                    description: If we should add flag with scan result to email on service
+                    default: false
+                    type: boolean
+                first_fetch_mode:
+                    description: Fetching mode to use when acccessing given email account for the first time
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/EmailFirstFetchMode'
+        ErrorMessageModel:
+            title: ErrorMessageModel
+            required:
+                - detail
+            type: object
+            properties:
+                detail:
+                    title: Detail
+                    type: string
+        FileType:
+            title: FileType
+            description: |-
+                All file types we support.
+
+                This list is used in reports' search form.
+            enum:
+                - 64bits
+                - 7zip
+                - ace
+                - apk
+                - bat
+                - bmp
+                - csv
+                - doc
+                - docm
+                - docx
+                - dot
+                - dotm
+                - dotx
+                - eml
+                - elf
+                - gif
+                - hta
+                - htm
+                - html
+                - img
+                - iso
+                - java
+                - java-bytecode
+                - javascript
+                - jpg
+                - lnk
+                - mbox
+                - mthml
+                - msg
+                - msi
+                - mso
+                - ole
+                - pdf
+                - pedll
+                - peexe
+                - png
+                - ppt
+                - pptm
+                - pptx
+                - pot
+                - potm
+                - potx
+                - ps
+                - pub
+                - powershell
+                - rar
+                - rfc822
+                - rtf
+                - svg
+                - txt
+                - vbs
+                - wmv
+                - wsf
+                - xls
+                - xlsm
+                - xlsb
+                - xlsx
+                - xlt
+                - xltm
+                - xltx
+                - xsl
+                - zip
+                - exe
+                - mail
+                - ms-office
+                - script
+            type: string
+        GroupOut:
+            title: GroupOut
+            description: Users' group for out
+            required:
+                - name
+            type: object
+            properties:
+                name:
+                    title: Name
+                    type: string
+        HTTPValidationError:
+            title: HTTPValidationError
+            type: object
+            properties:
+                detail:
+                    title: Detail
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ValidationError'
+        IOCsPrevalenceSearchParams:
+            title: IOCsPrevalenceSearchParams
+            description: Params for IOCs' prevalence search
+            type: object
+            properties:
+                domain:
+                    title: Domain
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                ip:
+                    title: Ip
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                url:
+                    title: Url
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                uuid:
+                    title: Uuid
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                email:
+                    title: Email
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                registry_path:
+                    title: Registry Path
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                revision_save_id:
+                    title: Revision Save Id
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                sha1:
+                    title: Sha1
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                sha256:
+                    title: Sha256
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                sha512:
+                    title: Sha512
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                md5:
+                    title: Md5
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                imphash:
+                    title: Imphash
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                ssdeep:
+                    title: Ssdeep
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                authentihash:
+                    title: Authentihash
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                fuzzyfsiohash:
+                    title: Fuzzyfsiohash
+                    default: []
+                    type: array
+                    items:
+                        type: string
+                days:
+                    title: Days
+                    default: 30
+                    maximum: 30
+                    exclusiveMinimum: false
+                    type: integer
+        Language:
+            title: Language
+            description: An enumeration.
+            enum:
+                - en
+                - de
+                - zh-CN
+                - es
+                - hi
+                - ar
+                - pt
+                - bn
+                - ru
+                - ja
+                - ko
+                - fr
+                - te
+                - mr
+                - tr
+                - ta
+                - vi
+                - ur
+            type: string
+        LoggingRecordKeyType:
+            title: LoggingRecordKeyType
+            description: Type of key attribute for logging record
+            enum:
+                - scan_init_id
+            type: string
+        MainTaskSimplifiedState:
+            title: MainTaskSimplifiedState
+            description: An enumeration.
+            enum:
+                - success
+                - failed
+                - in_progress
+            type: string
+        ProfileResponse:
+            title: ProfileResponse
+            required:
+                - subscribe
+            type: object
+            properties:
+                first_name:
+                    title: First Name
+                    type: string
+                last_name:
+                    title: Last Name
+                    type: string
+                phone:
+                    title: Phone
+                    type: string
+                company:
+                    title: Company
+                    type: string
+                job:
+                    title: Job
+                    type: string
+                role:
+                    title: Role
+                    type: string
+                department:
+                    title: Department
+                    type: string
+                industry:
+                    title: Industry
+                    type: string
+                subscribe:
+                    title: Subscribe
+                    type: boolean
+        PublicityType:
+            title: PublicityType
+            description: An enumeration.
+            enum:
+                - public
+                - private
+            type: string
+        REPORTS_SEARCH_PAGE_SIZE_OPTIONS:
+            title: REPORTS_SEARCH_PAGE_SIZE_OPTIONS
+            description: An enumeration.
+            enum:
+                - 5
+                - 10
+                - 20
+            type: integer
+        ReportFileType:
+            title: ReportFileType
+            description: An enumeration.
+            enum:
+                - all
+                - input
+                - extracted
+                - downloaded
+                - visualization
+                - rendered_url
+                - rendered_url_phishing
+            type: string
+        ReportFormat:
+            title: ReportFormat
+            description: An enumeration.
+            enum:
+                - misp
+                - stix
+                - html
+                - pdf
+            type: string
+        ReportSearchMethod:
+            title: ReportSearchMethod
+            description: An enumeration.
+            enum:
+                - or
+                - and
+            type: string
+        ReportSearchResponse:
+            title: ReportSearchResponse
+            description: Search response returned to user
+            required:
+                - items
+                - count
+                - method
+            type: object
+            properties:
+                items:
+                    title: Items
+                    type: array
+                    items: {}
+                count:
+                    title: Count
+                    type: integer
+                count_search_params:
+                    title: Count Search Params
+                    type: integer
+                method:
+                    title: Method
+                    type: string
+                dbs_sync:
+                    title: Dbs Sync
+                    type: boolean
+        ReportVerdict:
+            title: ReportVerdict
+            description: The verdict of the scan.
+            enum:
+                - unknown
+                - benign
+                - informational
+                - suspicious
+                - likely_malicious
+                - malicious
+            type: string
+        ReportsSourceType:
+            title: ReportsSourceType
+            description: Defines the way the scan was initiated.
+            enum:
+                - url
+                - url-to-file
+                - file
+            type: string
+        RequestPasswordResetPayload:
+            title: RequestPasswordResetPayload
+            required:
+                - email
+            type: object
+            properties:
+                email:
+                    title: Email
+                    type: string
+        ResetPasswordPayload:
+            title: ResetPasswordPayload
+            required:
+                - token
+                - password
+                - password_confirm
+            type: object
+            properties:
+                token:
+                    title: Token
+                    type: string
+                password:
+                    title: Password
+                    type: string
+                password_confirm:
+                    title: Password Confirm
+                    type: string
+        S3Credentials.__pydantic_model__:
+            title: S3Credentials
+            description: AWS S3 credentials
+            required:
+                - bucket
+                - key_id
+                - secret_key
+                - region
+            type: object
+            properties:
+                bucket:
+                    title: Bucket name
+                    type: string
+                key_id:
+                    title: Access key ID
+                    type: string
+                secret_key:
+                    title: Secret key
+                    type: string
+                region:
+                    title: Region
+                    type: string
+        ScanSourceConnectionSecurity:
+            title: ScanSourceConnectionSecurity
+            description: An enumeration.
+            enum:
+                - ssl_tls
+                - start_tls
+            type: string
+        ScanSourceFileState:
+            title: ScanSourceFileState
+            description: All possible states of processing of file from remote scan source
+            enum:
+                - queued_for_download
+                - downloading
+                - queued_for_scan
+                - scanning
+                - scan_completed
+            type: string
+        ScanSourceType:
+            title: ScanSourceType
+            description: An enumeration.
+            enum:
+                - 'email:IMAP'
+                - s3
+            type: string
+        ScheduleTaskConfigResponse:
+            title: ScheduleTaskConfigResponse
+            description: Return job config to user
+            required:
+                - name
+                - trigger
+                - trigger_config
+            type: object
+            properties:
+                name:
+                    title: Name
+                    type: string
+                trigger:
+                    $ref: '#/components/schemas/ScheduleTaskTrigger'
+                trigger_config:
+                    title: Trigger Config
+                    type: object
+                runtime_config:
+                    title: Runtime Config
+                    type: object
+        ScheduleTaskStateResponse:
+            title: ScheduleTaskStateResponse
+            description: Return job state to user
+            required:
+                - name
+                - state
+                - updated_date
+            type: object
+            properties:
+                name:
+                    title: Name
+                    type: string
+                state:
+                    title: State
+                    type: string
+                data:
+                    title: Data
+                    type: object
+                updated_date:
+                    format: date-time
+                    title: Updated Date
+                    type: string
+                public_log:
+                    title: Public Log
+                    type: array
+                    items: {}
+        ScheduleTaskTrigger:
+            title: ScheduleTaskTrigger
+            description: All available trigger types
+            enum:
+                - once
+                - date
+                - interval
+                - cron
+                - calendarinterval
+            type: string
+        SigninExternalPayload:
+            title: SigninExternalPayload
+            required:
+                - code
+            type: object
+            properties:
+                code:
+                    title: Code
+                    type: string
+        SigninPayload:
+            title: SigninPayload
+            required:
+                - email
+                - password
+            type: object
+            properties:
+                email:
+                    title: Email
+                    type: string
+                password:
+                    title: Password
+                    type: string
+        SignupPayload:
+            title: SignupPayload
+            required:
+                - email
+                - password
+                - password_confirm
+            type: object
+            properties:
+                username:
+                    title: Username
+                    type: string
+                email:
+                    title: Email
+                    type: string
+                email_confirm:
+                    title: Email Confirm
+                    type: string
+                password:
+                    title: Password
+                    type: string
+                password_confirm:
+                    title: Password Confirm
+                    type: string
+                invite_token:
+                    title: Invite Token
+                    type: string
+        SiteLogoType:
+            title: SiteLogoType
+            description: 'Type of logo, representing it''s usecase'
+            enum:
+                - main
+                - top_menu
+                - footer
+            type: string
+        SiteTheme:
+            title: SiteTheme
+            description: All available themes
+            enum:
+                - light
+                - dark
+            type: string
+        TermsType:
+            title: TermsType
+            description: An enumeration.
+            enum:
+                - privacy-policy
+                - terms-condition
+                - cookie-policy
+            type: string
+        TokensPair:
+            title: TokensPair
+            description: Used as a response model
+            required:
+                - access_token
+                - refresh_token
+            type: object
+            properties:
+                access_token:
+                    title: Access Token
+                    type: string
+                refresh_token:
+                    title: Refresh Token
+                    type: string
+        UserNotification:
+            title: UserNotification
+            description: All notifications available for users
+            enum:
+                - dark_theme
+            type: string
+        UserResponse:
+            title: UserResponse
+            description: System user for out
+            required:
+                - account_id
+                - email
+                - has_avatar
+            type: object
+            properties:
+                account_id:
+                    title: Account Id
+                    type: string
+                email:
+                    title: Email
+                    type: string
+                username:
+                    title: Username
+                    type: string
+                groups:
+                    title: Groups
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GroupOut'
+                has_avatar:
+                    title: Has Avatar
+                    type: boolean
+                profile:
+                    $ref: '#/components/schemas/ProfileResponse'
+                api_key:
+                    title: Api Key
+                    type: string
+                theme:
+                    title: Theme
+                    type: string
+        UserStatResponse:
+            title: UserStatResponse
+            description: Return user stat data to user
+            required:
+                - name
+                - value
+                - updated_date
+            type: object
+            properties:
+                name:
+                    title: Name
+                    type: string
+                value:
+                    anyOf:
+                        -
+                            type: boolean
+                        -
+                            type: string
+                        -
+                            type: integer
+                        -
+                            type: array
+                            items: {}
+                        -
+                            type: object
+                    title: Value
+                updated_date:
+                    format: date-time
+                    title: Updated Date
+                    type: string
+        ValidationError:
+            title: ValidationError
+            required:
+                - loc
+                - msg
+                - type
+            type: object
+            properties:
+                loc:
+                    title: Location
+                    type: array
+                    items:
+                        type: string
+                msg:
+                    title: Message
+                    type: string
+                type:
+                    title: Error Type
+                    type: string
+        Verdict:
+            title: Verdict
+            description: An enumeration.
+            enum:
+                - benign
+                - informational
+                - suspicious
+                - likely_malicious
+                - malicious
+                - unknown
+            type: string
+        FuzzyhashVerdict:
+            title: FuzzyhashVerdict
+            description: Fuzzy hash verdict
+            required:
+                - verdict
+            type: object
+            properties:
+                hash:
+                    title: Hash
+                    type: string
+                verdict:
+                    $ref: '#/components/schemas/ReportVerdict'
+        CommunityVoteResponse:
+            title: CommunityVoteResponse
+            required:
+                - vote_malicious
+                - vote_benign
+            type: object
+            properties:
+                vote_malicious:
+                    title: Number of malicious votes
+                    type: integer
+                vote_benign:
+                    title: Number of benign votes
+                    type: integer
+        ReportForReputationCalculation:
+            title: ReportForReputationCalculation
+            description: Report with verdict date and ID
+            required:
+                - verdict
+                - report_date
+                - report_id
+            type: object
+            properties:
+                verdict:
+                    $ref: '#/components/schemas/ReportVerdict'
+                report_date:
+                    format: date-time
+                    title: Report Date
+                    type: string
+                report_id:
+                    title: Report Id
+                    type: string
+        ResultMultiscan:
+            title: ResultMultiscan
+            description: Result of one multiscan
+            required:
+                - total_av_engines
+                - detected_av_engines
+                - scan_time
+            type: object
+            properties:
+                total_av_engines:
+                    title: Total Av Engines
+                    type: integer
+                detected_av_engines:
+                    title: Detected Av Engines
+                    type: integer
+                scan_time:
+                    format: date-time
+                    title: Scan Time
+                    type: string
+        ReputationResultHash:
+            title: ReputationResultHash
+            required:
+                - sha256
+                - overall_verdict
+                - filescan_reports
+            type: object
+            properties:
+                sha256:
+                    title: The SHA256 hash
+                    type: string
+                overall_verdict:
+                    title: Overall verdict
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ReportVerdict'
+                fuzzyhash:
+                    title: Fuzzyhash verdict along with fuzzyhash
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/FuzzyhashVerdict'
+                mdcloud:
+                    title: MDCloud reputation
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ResultMultiscan'
+                community:
+                    title: Community reputation
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/CommunityVoteResponse'
+                filescan_reports:
+                    title: Filescan reports
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ReportForReputationCalculation'
+        ReputationIocType:
+            title: ReputationIocType
+            description: An enumeration.
+            enum:
+                - domain
+                - ip
+                - url
+            type: string
+        ReputationResultIoc:
+            title: ReputationResultIoc
+            required:
+                - ioc_type
+                - ioc_value
+                - overall_verdict
+                - filescan_reports
+            type: object
+            properties:
+                ioc_type:
+                    title: 'Type of the IOC: domain, url or ip'
+                    type: string
+                ioc_value:
+                    title: 'IP address, domain or URL on which the reputation lookup was performed'
+                    type: string
+                overall_verdict:
+                    title: Overall verdict
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ReportVerdict'
+                mdcloud:
+                    title: MDCloud reputation
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/ResultLookup'
+                community:
+                    title: Community reputation
+                    allOf:
+                        -
+                            $ref: '#/components/schemas/CommunityVoteResponse'
+                filescan_reports:
+                    title: Filescan reports
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ReportForReputationCalculation'
+        ResultLookup:
+            title: ResultLookup
+            description: 'Result of one lookup for IP, domain or URL'
+            required:
+                - scan_time
+                - detected
+            type: object
+            properties:
+                scan_time:
+                    format: date-time
+                    title: Scan Time
+                    type: string
+                detected:
+                    title: Detected
+                    type: integer
+    securitySchemes:
+        apiKey:
+            type: apiKey
+            name: X-Api-Key
+            in: header
+tags:
+    -
+        name: scan
+        description: Upload file or URL resource for scan
+    -
+        name: reports
+        description: Retrieve a variety of report related data
+    -
+        name: files
+        description: Get a file by its hash or id in various format
+    -
+        name: feed
+        description: Atom feed
+    -
+        name: users
+        description: Report-related and other functionality used by ordinary users.
+    -
+        name: system
+        description: Various helper and system functionality.
+    -
+        name: backend
+        description: Backend wrapper
+    -
+        name: docs
+        description: API documentation related
+    -
+        name: reputation
+        description: Reputation related APIs
