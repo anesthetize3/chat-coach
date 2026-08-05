@@ -1,0 +1,23 @@
+items:
+  - category: General
+    items:
+      - how-to-perform-basic-troubleshooting-for-metadefender-sandbox-
+      - password-reset
+      - low-disk-space
+      - license-file-corruption
+      - why-is-metadefender-sandbox-failing-to-retrieve-reputation-data-
+      - how-do-i-get-a-false-detection--false-positive-or-false-negative
+      - can-i-change-metadefender-sandbox-web-ui---s-port-
+      - slow-web-interface-in-offline-environment
+  - category: Deployment
+    items:
+      - installation-troubleshooting
+      - dns-and-connectivity-issues
+      - docker-related-issues
+      - enhancing-software-resilience-and-achieving-cis-level-1-standard
+      - arangodb-corruption-issue
+  - category: Operations
+    items:
+      - services-and-system-components
+      - collect-logfiles
+      - logging
