@@ -9,6 +9,5 @@ documentations:
     - release-notes
     - faq
     - troubleshooting
-    - '-test-'
 references:
     - metadefender-sandbox-api-reference
