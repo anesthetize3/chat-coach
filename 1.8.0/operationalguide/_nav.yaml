@@ -1,0 +1,15 @@
+items:
+  - architecture
+  - frontend-server
+  - backend-server
+  - installation-guide
+  - category: 'Use Cases'
+    items:
+      - page: scan-file
+        items:
+          - scan-file/scan-file-UI
+          - scan-file/scan-file-API
+      - page: scan-url
+        items:
+          - scan-url/scan-url-UI
+          - scan-url/scan-url-API
