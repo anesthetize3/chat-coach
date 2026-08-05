@@ -1,0 +1,24 @@
+items:
+  - category: General
+    items:
+      - page: backend-server
+        items:
+          - backend-server/user-group-access
+  - category: Cloud
+    items:
+      - installation-guide
+  - category: 'Threat Analysis'
+    items:
+      - page: scan-file
+        items:
+          - scan-file/scan-file-UI
+          - scan-file/scan-file-API
+      - page: scan-url
+        items:
+          - scan-url/scan-url-UI
+          - scan-url/scan-url-API
+      - page: threat-intelligence
+        items:
+          - threat-intelligence/similarity-search
+          - threat-intelligence/reputation-lookup
+      - advanced-search

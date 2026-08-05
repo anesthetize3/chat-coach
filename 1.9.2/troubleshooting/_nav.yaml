@@ -1,0 +1,16 @@
+items:
+  - category: General
+    items:
+      - password-reset
+      - incomplete-invitation-link
+  - category: Deployment
+    items:
+      - installation-troubleshooting
+      - installing-pip3-dependencies
+      - dns-and-connectivity-issues
+      - docker-related-issues
+  - category: Operations
+    items:
+      - about-logging-commands
+      - collect-logfiles
+      - logging
