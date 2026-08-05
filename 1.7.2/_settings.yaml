@@ -1,0 +1,14 @@
+name: 1.7.2
+published: true
+documentations:
+    - installation
+    - configuration
+    - operating
+    - datasheet
+    - fsbroker
+    - fstransform
+    - faq
+    - release-notes
+    - troubleshooting
+references:
+    - opswat-filescan
