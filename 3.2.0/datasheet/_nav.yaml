@@ -1,0 +1,72 @@
+items:
+  - category: Overview
+  - category: 'Product Overview'
+    items:
+      - page: why-opswat-filescan-
+        items:
+          - why-opswat-filescan-/emulation-based-sandboxing--a-faster--smarter-approach
+          - why-opswat-filescan-/the-new-metadefender-aether-user-interface-design-explained
+      - metadefender-aether-for-coreo9z
+      - metadefender-aether-for-corek7w
+      - metadefender-aether-for-core
+  - category: 'Zero-Day Detection Pipeline'
+    items:
+      - page: layer-1---threat-reputation
+        items:
+          - layer-1---threat-reputation/global-reputation-api
+          - layer-1---threat-reputation/threat-intelligence
+          - layer-1---threat-reputation/prevalence-search
+      - page: layer-2---static-analysis
+        items:
+          - layer-2---static-analysis/ai-powered-threat-detection
+          - layer-2---static-analysis/pre-execution-file-analysis
+          - page: layer-2---static-analysis/file-types
+            items:
+              - layer-2---static-analysis/file-types/supported-file-types
+              - layer-2---static-analysis/file-types/maximum-file-size
+      - page: layer-1---threat-reputationpm86o8
+        items:
+          - layer-1---threat-reputationpm86o8/engine-features
+          - page: layer-1---threat-reputationpm86o8/url-analysis
+            items:
+              - layer-1---threat-reputationpm86o8/url-analysis/url-capabilities
+              - layer-1---threat-reputationpm86o8/url-analysis/detected-brands
+              - layer-1---threat-reputationpm86o8/url-analysis/webthreat
+              - layer-1---threat-reputationpm86o8/url-analysis/offline-url-reputation
+          - layer-1---threat-reputationpm86o8/supported-file-type
+          - page: layer-1---threat-reputationpm86o8/executable-analysis
+            items:
+              - layer-1---threat-reputationpm86o8/executable-analysis/supported-malwares-for-config-extraction
+              - layer-1---threat-reputationpm86o8/executable-analysis/supported-malware-families-via-yara
+              - layer-1---threat-reputationpm86o8/executable-analysis/supported-packers-for-unpacking
+              - layer-1---threat-reputationpm86o8/executable-analysis/hidden-artifact-extraction
+              - layer-1---threat-reputationpm86o8/executable-analysis/pe-emulator--beta-
+          - layer-1---threat-reputationpm86o8/steganography-analysis
+          - layer-1---threat-reputationpm86o8/apk-analysis
+          - layer-1---threat-reputationpm86o8/scanning-ai-models-for-security-risks
+      - page: layer-1---threat-reputationpm8
+        items:
+          - layer-1---threat-reputationpm8/verdict
+          - layer-1---threat-reputationpm8/sandbox-tags
+          - layer-1---threat-reputationpm8/mitre-attack-coverage
+          - layer-1---threat-reputationpm8/mitre-mbc-coverage
+          - layer-1---threat-reputationpm8/adaptive-threat-context
+          - layer-1---threat-reputationpm8/export-formats
+          - layer-1---threat-reputationpm8/zero-day-threat-identification
+      - page: layer-1---threat-reputationpm8npn
+        items:
+          - layer-1---threat-reputationpm8npn/advanced-search
+          - page: layer-1---threat-reputationpm8npn/advanced-reputation
+            items:
+              - layer-1---threat-reputationpm8npn/advanced-reputation/threat-pattern-correlator
+              - layer-1---threat-reputationpm8npn/advanced-reputation/additional-scan-steps
+              - layer-1---threat-reputationpm8npn/advanced-reputation/threat-pattern-correlator-nonpe
+  - category: Showcases
+    items:
+      - file-analysis---deep-extraction
+      - other-evasion---anti-analysis
+      - web---phishing
+      - supply-chain-threats
+      - targeted-attacks
+      - showcasing-report-video
+  - separator
