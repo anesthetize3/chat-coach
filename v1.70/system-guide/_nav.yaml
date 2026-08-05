@@ -1,0 +1,21 @@
+items:
+  - introduction
+  - architecture-overview
+  - minimal-requirements
+  - quick-installation
+  - transform-reference-guide
+  - file---folder-structure
+  - logging
+  - core-options
+  - transform-exit-codes
+  - docker-integration
+  - automatically-scan-e-mails
+  - retention-policy-configuration
+  - file-size-limit-configuration
+  - s3-bucket-configuration
+  - whitelist-configuration
+  - local-whitelist
+  - nsrl-whitelist-integration
+  - cef-syslog-feedback
+  - verdict
+  - multi-server-deployment
