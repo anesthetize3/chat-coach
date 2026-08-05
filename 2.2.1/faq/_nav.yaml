@@ -1,0 +1,39 @@
+items:
+  - category: General
+    items:
+      - purpose-of-your-service-product
+      - supported-file-types
+      - ioc
+      - extracted-iocs-types
+      - upload-an-archive
+      - archive-password
+      - analyze-the-same-file
+      - advanced-search
+      - api
+      - timezone-preferences
+      - retrieving-api-keys-guidelinepnu
+      - how-long-are-previous-versions-of-sandbox-supported
+      - how-to-update-yara-rules-in-an-air-gapped-offline-environment
+      - i-am-receiving-a-timeout-generating-a-pdf--what-can-i-do-
+      - how-to-disable----terms-of-use-and-privacy-policy----checkbox-in
+      - adaptive-sandbox-full-report-overview
+      - how-to-read-the-adaptive-sandbox-result
+  - category: Deployment
+    items:
+      - do-you-offer-a-pure-offline-deployment-upgrade-process-
+      - asd
+      - what-exclusions-should-i-make-on-my-anti-malware-software-to-pre
+  - category: Engine
+    items:
+      - sandbox-technology
+      - efficacy
+  - category: 'URL Analysis'
+    items:
+      - what-url-analysis-capabilities-are-in-filescan-
+      - brand-detection
+      - what-is-the-maximum-url-length-limit-
+  - category: Licensing
+    items:
+      - commercial-licensing
+      - what-is-the-difference-between-filescan-io-and-opswat-filescan-c
+      - is-free-api-same-as-commercial
