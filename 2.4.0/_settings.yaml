@@ -1,0 +1,13 @@
+name: 2.4.0
+published: true
+documentations:
+    - datasheet
+    - installation
+    - integrations
+    - adminguide
+    - faq
+    - configuration
+    - release-notes
+    - troubleshooting
+references:
+    - metadefender-sandbox-api-reference
