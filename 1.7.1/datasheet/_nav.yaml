@@ -1,0 +1,14 @@
+items:
+  - why-opswat-filescan-
+  - link:
+      title: Datasheet
+      url: 'https://static.opswat.com/uploads/files/OPSWAT_FileScan_Datasheet.pdf'
+  - link:
+      title: 'Technical Requirements'
+      url: 'https://docs.opswat.com/filescan/installation/technical-requirements#throughput-hardware-requirements'
+  - supported-file-types
+  - advanced-search
+  - solution-rfp-old
+  - solution-rfp
+  - engine-features
+  - installed-packages-by-filescan

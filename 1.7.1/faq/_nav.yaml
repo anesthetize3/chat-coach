@@ -1,0 +1,19 @@
+items:
+  - category: General
+    items:
+      - purpose-of-your-service-product
+      - supported-file-types
+      - ioc
+      - extracted-iocs-types
+      - upload-an-archive
+      - archive-password
+      - analyze-the-same-file
+      - advanced-search
+      - api
+      - is-free-api-same-as-commercial
+      - commercial-licensing
+      - latest-news
+  - category: Engine
+    items:
+      - sandbox-technology
+      - efficacy

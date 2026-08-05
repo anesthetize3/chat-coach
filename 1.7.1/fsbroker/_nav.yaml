@@ -1,0 +1,10 @@
+items:
+  - introduction
+  - page: specification
+    items:
+      - specification/system-info-endpoint
+      - specification/scan-api-endpoint
+      - specification/submit-result-api-endpoint
+      - specification/task-api-endpoint
+      - specification/file-api-endpoint
+      - specification/reputation-api-endpoint
