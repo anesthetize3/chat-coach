@@ -4,7 +4,7 @@ title: Air-gapped Systems
 listed: true
 description: 
 index_title: Air-gapped Systems
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

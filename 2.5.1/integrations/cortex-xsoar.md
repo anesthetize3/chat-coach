@@ -4,7 +4,7 @@ title: Palo Alto - Cortex XSOAR
 listed: true
 description: 
 index_title: Palo Alto - Cortex XSOAR
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

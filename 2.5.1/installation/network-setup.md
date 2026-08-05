@@ -4,7 +4,7 @@ title: Network Setup
 listed: true
 description: 
 index_title: Network Setup
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

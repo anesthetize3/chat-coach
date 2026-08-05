@@ -4,7 +4,7 @@ title: ChatGPT (Executive Summary)
 listed: true
 description: 
 index_title: ChatGPT (Executive Summary)
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: Changelog
 listed: true
 description: 
 index_title: Changelog
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

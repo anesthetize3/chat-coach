@@ -4,7 +4,7 @@ title: Installation troubleshooting
 listed: true
 description: 
 index_title: Installation troubleshooting
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

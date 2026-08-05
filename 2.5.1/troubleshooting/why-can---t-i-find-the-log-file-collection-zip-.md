@@ -4,7 +4,7 @@ title: Why can’t I find the log file collection zip?
 listed: true
 description: 
 index_title: Why can’t I find the log file collection zip?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

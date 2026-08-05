@@ -4,7 +4,7 @@ title: Upgrade
 listed: true
 description: 
 index_title: Upgrade
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

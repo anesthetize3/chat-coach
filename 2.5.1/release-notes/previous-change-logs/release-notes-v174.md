@@ -4,7 +4,7 @@ title: Release Notes for v1.7.4
 listed: true
 description: 
 index_title: Release Notes for v1.7.4
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: ArangoDB corruption issue
 listed: true
 description: 
 index_title: ArangoDB corruption issue
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

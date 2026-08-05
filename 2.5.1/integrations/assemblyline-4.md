@@ -4,7 +4,7 @@ title: Assemblyline 4
 listed: true
 description: 
 index_title: Assemblyline 4
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

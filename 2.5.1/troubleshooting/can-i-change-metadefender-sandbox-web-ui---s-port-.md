@@ -4,7 +4,7 @@ title: Can I change MetaDefender Sandbox Web UI’s port?
 listed: true
 description: 
 index_title: Can I change MetaDefender Sandbox Web UI’s port?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

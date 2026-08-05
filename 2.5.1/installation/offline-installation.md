@@ -4,7 +4,7 @@ title: Offline Installation
 listed: true
 description: 
 index_title: Offline Installation
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

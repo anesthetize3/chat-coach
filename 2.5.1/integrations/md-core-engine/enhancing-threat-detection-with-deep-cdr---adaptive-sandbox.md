@@ -4,7 +4,7 @@ title: Enhancing Threat Detection with Deep CDR & Adaptive Sandbox
 listed: true
 description: 
 index_title: Enhancing Threat Detection with Deep CDR & Adaptive Sandbox
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

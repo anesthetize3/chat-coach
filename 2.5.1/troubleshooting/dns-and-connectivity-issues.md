@@ -4,7 +4,7 @@ title: DNS and connectivity issues
 listed: true
 description: 
 index_title: DNS and connectivity issues
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

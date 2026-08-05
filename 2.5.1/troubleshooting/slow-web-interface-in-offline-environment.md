@@ -4,7 +4,7 @@ title: Slow web interface in offline environment
 listed: true
 description: 
 index_title: Slow web interface in offline environment
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

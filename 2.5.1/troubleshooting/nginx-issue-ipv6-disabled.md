@@ -4,7 +4,7 @@ title: NGINX startup issue when IPv6 is disabled
 listed: true
 description: 
 index_title: NGINX startup issue when IPv6 is disabled
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

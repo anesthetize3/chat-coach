@@ -4,7 +4,7 @@ title: License Activation
 listed: true
 description: 
 index_title: License Activation
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

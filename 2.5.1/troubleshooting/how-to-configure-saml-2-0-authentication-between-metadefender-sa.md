@@ -4,7 +4,7 @@ title: How to Configure SAML 2.0 Authentication Between MetaDefender Sandbox and
 listed: true
 description: 
 index_title: How to Configure SAML 2.0 Authentication Between MetaDefender Sandbox and Okta?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

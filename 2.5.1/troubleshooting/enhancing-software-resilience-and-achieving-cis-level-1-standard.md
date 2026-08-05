@@ -4,7 +4,7 @@ title: Enhancing Software Resilience and Achieving CIS Level 1 Standards
 listed: true
 description: 
 index_title: Enhancing Software Resilience and Achieving CIS Level 1 Standards
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

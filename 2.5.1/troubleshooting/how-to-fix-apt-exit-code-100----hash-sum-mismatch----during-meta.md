@@ -4,7 +4,7 @@ title: How to fix apt Exit Code 100 “Hash Sum mismatch” during MetaDefender 
 listed: true
 description: 
 index_title: How to fix apt Exit Code 100 “Hash Sum mismatch” during MetaDefender Sandbox upgrade on Ubuntu?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

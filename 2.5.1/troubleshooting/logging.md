@@ -4,7 +4,7 @@ title: Logging
 listed: true
 description: 
 index_title: View logfiles
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: Splunk SOAR
 listed: true
 description: 
 index_title: Splunk SOAR
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: My Offline Deployment of MetaDefender Sandbox has lost its license - What
 listed: true
 description: 
 index_title: My Offline Deployment of MetaDefender Sandbox has lost its license - What can I do?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

@@ -4,7 +4,7 @@ title: Uninstall Guide
 listed: true
 description: 
 index_title: Uninstall Guide
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

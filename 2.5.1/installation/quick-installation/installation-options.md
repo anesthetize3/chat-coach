@@ -4,7 +4,7 @@ title: Installation Options
 listed: true
 description: 
 index_title: Installation Options
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

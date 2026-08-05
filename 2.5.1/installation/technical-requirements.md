@@ -4,7 +4,7 @@ title: Technical Requirements
 listed: true
 description: 
 index_title: Technical Requirements
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

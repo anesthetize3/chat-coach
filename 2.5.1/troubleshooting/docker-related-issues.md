@@ -4,7 +4,7 @@ title: Docker-related issues
 listed: true
 description: 
 index_title: Docker-related issues
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

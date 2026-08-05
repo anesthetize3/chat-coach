@@ -4,7 +4,7 @@ title: How to perform basic troubleshooting for MetaDefender Sandbox?
 listed: true
 description: 
 index_title: How to perform basic troubleshooting for MetaDefender Sandbox?
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

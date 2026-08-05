@@ -4,7 +4,7 @@ title: Threat Intel Search
 listed: true
 description: 
 index_title: Threat Intel Search
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

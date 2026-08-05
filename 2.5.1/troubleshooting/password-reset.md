@@ -4,7 +4,7 @@ title: Password reset
 listed: true
 description: 
 index_title: Password reset
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

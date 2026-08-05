@@ -4,7 +4,7 @@ title: Collect logfiles
 listed: true
 description: 
 index_title: Collect logfiles
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---

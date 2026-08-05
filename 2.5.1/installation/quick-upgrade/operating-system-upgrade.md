@@ -4,7 +4,7 @@ title: Operating System Upgrade
 listed: true
 description: 
 index_title: Operating System Upgrade
-hidden: false
+hidden: true
 keywords: 
 tags: 
 ---
