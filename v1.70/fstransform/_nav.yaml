@@ -1,0 +1,8 @@
+items:
+  - introduction
+  - page: specification
+    items:
+      - specification/api-end
+      - specification/scan-api-endpoint
+      - specification/task-api-endpoint
+      - specification/file-api-endpoint
